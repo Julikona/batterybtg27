@@ -1,11 +1,12 @@
 main {
     display: flex;
-    margin-left: calc(16rem + 1vw);  /* Default: 250px */
+    margin-left: calc(420px + 1vw);  /* Default: 250px */
     margin-top: 60px; /* Abstand nach dem Header */
     overflow-y: auto;
     position: relative; /* Verhindert, dass der Main-Bereich hinter die Sidebar verschwindet */
     padding: 20px;
     min-width: 10px;
+    flex-direction: column;
 }
 
 .column {
@@ -16,32 +17,34 @@ main {
 
 }
 
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
 footer {
     margin-top: 4vw;
 }
 
 @media screen and (max-width: 777px) {
     main {
-        margin-left: calc(10rem + 2vw);
+        margin-left: calc(200px + 2vw);
     }
 
     footer {
-        width: calc(100% - 10rem + 1vw); /* Breite der Sidebar abziehen */
-        left: calc(10rem + 1vw); /* Footer beginnt nach der Sidebar */
+        width: calc(100% - 200px + 1vw); /* Breite der Sidebar abziehen */
+        left: calc(200px + 1vw); /* Footer beginnt nach der Sidebar */
     }
 
     .sidebar {
-        width: min-content;
+        width: 200px;
     }
-
-    /* .mascot-container {
-        width: calc(10rem + 2vw);
-    } */
 }
 
-@media screen and (min-width: 777px) {
+@media screen and (min-width: 777px) {  /* Große Bildschirme */
     footer {
-        width: calc(100% - 16rem + 1vw); /* Breite der Sidebar abziehen */
-        left: calc(16rem - 1vw); /* Footer beginnt nach der Sidebar */
+        width: calc(100% - 420px + 1vw); /* Breite der Sidebar abziehen */
+        left: calc(420px + 1vw); /* Footer beginnt nach der Sidebar */
     }
 }

@@ -51,58 +51,61 @@
 
     <!-- Main Inhalt -->
     <main>
-        <div class="column">
-            <h1 id="pageTitle">test TODO</h1>
-            <!-- Unterlagen Feld -->
-            <div class="field-documents">
-                <h2>Unterlagen</h2>
-                <div id="documents-list">
-                    <ul>
-                    </ul>
-                    <button class="download-btn" id="downloadAllDocuments">Alle herunterladen</button>
+        <h1 id="pageTitle">test TODO</h1>
+        <div class="row">
+            <div class="column">
+                <!-- Unterlagen Feld -->
+                <div class="field-documents">
+                    <h2>Unterlagen</h2>
+                    <div id="documents-list">
+                        <ul>
+                        </ul>
+                        <button class="download-btn" id="downloadAllDocuments">Alle herunterladen</button>
+                    </div>
+                </div>
+
+                <!-- Abgabe -->
+                <div class="field">
+                    <h2>Abgabe</h2>
+                    <div id="documents-list">
+                        <ul>
+                        </ul>
+                        <button class="download-btn" id="downloadAllSubmissions">Alle herunterladen</button>
+                    </div>
+                </div>
+
+                <!-- Abgaben Feld -->
+                <div class="field">
+                    <h2>Korrektur</h2>
+                    <div id="drag-drop-area" class="drag-drop-area">
+                        <p>Ziehe hier deine Dateien zum Hochladen</p>
+                    </div>
+                    <div id="submissions-list">
+                        <!-- Hochgeladene Dateien werden hier angezeigt -->
+                    </div>
+                </div>
+
+                <!-- Punktzahl -->
+                <div class="field">
+                    <h2>Punktzahl</h2>
+                    <input id="points" type="number" min="0" max="15" value="0">
+                    <button class="save-btn" onclick="savePoints()">Speichern</button>
+                </div>
+
+                <!-- Feedback Feld -->
+                <div class="field">
+                    <h2>Feedback</h2> <!-- TODO -->
+                    <textfield id="feedback-text"></textfield>
                 </div>
             </div>
 
-            <!-- Abgabe -->
-            <div class="field">
-                <h2>Abgabe</h2>
-                <div id="documents-list">
-                    <ul>
-                    </ul>
-                    <button class="download-btn" id="downloadAllSubmissions">Alle herunterladen</button>
-                </div>
-            </div>
 
-            <!-- Abgaben Feld -->
-            <div class="field">
-                <h2>Korrektur</h2>
-                <div id="drag-drop-area" class="drag-drop-area">
-                    <p>Ziehe hier deine Dateien zum Hochladen</p>
-                </div>
-                <div id="submissions-list">
-                    <!-- Hochgeladene Dateien werden hier angezeigt -->
-                </div>
-            </div>
-
-            <!-- Punktzahl -->
-            <div class="field">
-                <h2>Punktzahl</h2>
-                <input id="points" type="number" min="0" max="15" value="0">
-                <button class="save-btn" onclick="savePoints()">Speichern</button>
-            </div>
-
-            <!-- Feedback Feld -->
-            <div class="field">
-                <h2>Feedback</h2> <!-- TODO -->
-                <textfield id="feedback-text"></textfield>
+            <!--Macot Container-->
+            <div class="mascot-container">
+                <img src="textures/battery1.png" alt="Mascot">
             </div>
         </div>
 
-
-        <!--Macot Container-->
-        <div class="mascot-container">
-            <img src="textures/battery1.png" alt="Mascot">
-        </div>
     </main>
 
     <!-- Footer -->

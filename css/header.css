@@ -12,6 +12,7 @@ header {
     left: 0;
     width: 100%; /* Header nimmt volle Breite ein */
     z-index: 1000; /* Header bleibt immer oben */
+    text-wrap: nowrap;
 }
 
 header img {

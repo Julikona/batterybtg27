@@ -1,7 +1,7 @@
 /* Sidebar-Styling */
 .sidebar {
-    min-width: min-content;
-    width: fit-content;
+    min-width: 200px;
+    width: 420px;
     background-color: #c5e4fb;
     padding: 20px;
     position: fixed;
