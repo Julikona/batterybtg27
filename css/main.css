@@ -1,50 +1,9 @@
 main {
-    display: flex;
-    margin-left: calc(420px + 1vw);  /* Default: 250px */
+    flex: 1;
+    margin-left: 250px; /* Sidebar Platz */
+    margin-right: 300px; /* Abstand bis zum Mascot */
+    padding: 20px;
     margin-top: 60px; /* Abstand nach dem Header */
     overflow-y: auto;
     position: relative; /* Verhindert, dass der Main-Bereich hinter die Sidebar verschwindet */
-    padding: 20px;
-    min-width: 10px;
-    flex-direction: column;
-}
-
-.column {
-    display: flex;
-    flex-direction: column;
-    margin-right: 10vw; /* Abstand bis zum Mascot */
-    align-items: flex-start;
-
-}
-
-.row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-footer {
-    margin-top: 4vw;
-}
-
-@media screen and (max-width: 777px) {
-    main {
-        margin-left: calc(200px + 2vw);
-    }
-
-    footer {
-        width: calc(100% - 200px + 1vw); /* Breite der Sidebar abziehen */
-        left: calc(200px + 1vw); /* Footer beginnt nach der Sidebar */
-    }
-
-    .sidebar {
-        width: 200px;
-    }
-}
-
-@media screen and (min-width: 777px) {  /* Große Bildschirme */
-    footer {
-        width: calc(100% - 420px + 1vw); /* Breite der Sidebar abziehen */
-        left: calc(420px + 1vw); /* Footer beginnt nach der Sidebar */
-    }
 }
