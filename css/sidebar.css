@@ -1,15 +1,16 @@
 /* Sidebar-Styling */
 .sidebar {
-    width: 250px;
-    background-color: #dedee3;
+    min-width: 200px;
+    width: 420px;
+    background-color: #c5e4fb;
     padding: 20px;
     position: fixed;
     top: 60px; /* Sidebar nach dem Header */
     bottom: 0;
     left: 0;
     height: calc(100vh - 60px); /* Sidebar-Höhe abzüglich der Header-Höhe */
-    overflow-y: auto;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: hidden;
+    box-shadow: 2px 0 5px rgba(4, 0, 124, 0.1);
 }
 
 /* Styling für den Sidebar-Link */

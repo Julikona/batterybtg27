@@ -1,0 +1,137 @@
+/*Buttons*/
+/*Hertunterladen Buttons*/
+.download-btn {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.download-btn:hover {
+    background-color: #0056b3;
+}
+
+/*Löschen Buttons*/
+.delete-btn {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: hsl(4, 90%, 58%);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.delete-btn:hover {
+    background-color: hsl(4, 90%, 43%);
+}
+
+/* Save Button */
+.save-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.save-btn:hover {
+    background-color: #218838;
+}
+
+
+/* Allgemeine Stile für die Felder */
+.field, .field-documents {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    /*max-width: calc(100% - 350px);*/ /* Maximal die Breite bis zum Mascot-Bild */
+}
+
+.field h2, .field-documents h2 {
+    margin-bottom: 10px;
+}
+
+
+/* Auflistungen der Dateien */
+/* Liste */
+#documents-list ul, #submissions-list ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+#documents-list li, #submissions-list li {
+    margin-bottom: 10px;
+}
+#documents-list a, #submissions-list a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+/* Listenelemente */
+.document-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+}
+.document-item a {
+    text-decoration: none;
+    color: #007bff;
+    flex-grow: 1;
+}
+
+
+/*Abgaben*/
+.drag-drop-area {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    border: 2px dashed #007bff;
+    text-align: center;
+    color: #007bff;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-wrap: wrap;
+    overflow: hidden;
+}
+
+.drag-drop-area > p {
+    top: 50%;
+    width: 100%;
+    transform: translate(0%, -50%);
+    position: relative;
+}
+
+
+/*Feedback*/
+textarea {
+    width: 100%;
+    height: 150px;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.student-button {
+    background: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.student-button:hover {
+    background-color: #45a049;
+}

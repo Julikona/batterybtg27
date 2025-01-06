@@ -1,17 +1,16 @@
 .mascot-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 300px;
-    height: 400px;
-    padding: 20px;
-    position: fixed; /* Fixiert den Container */
-    right: 0; /* Positioniert den Container an der rechten Seite */
-    top: 50%; /* Vertikale Zentrierung */
-    transform: translateY(-50%); /* Exakte mittige Ausrichtung */
+    margin: 0.5rem;
+    height: 100%;
+    max-width: 300px;
+    min-width: 100px;
 }
 
 .mascot-container img {
     max-width: 100%; /* Bild wird auf die maximale Breite des Containers angepasst */
     height: auto; /* Höhe bleibt im Verhältnis zur Breite */
+    min-width: 100px;
+    position: relative;
+    /* top: 50%; */ /* Vertikale Zentrierung */
+    top: -4vw;
 }
