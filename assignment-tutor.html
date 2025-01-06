@@ -1,199 +1,58 @@
 <!DOCTYPE html>
 <html lang="de">
-    <head>
-        <!-- Meta -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Titel -->
-        <title>Main</title>
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Skript Bibliotheken -->
-        <!-- Packen von ZIP-Dateien -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-        <!-- Icons für Download-Button -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Titel -->
+    <title>Main</title>
 
-        <!-- CSS -->
-        <link rel="stylesheet" href="css/sidebar.css">
-        <link rel="stylesheet" href="css/mascot.css">
-        <link rel="stylesheet" href="css/footer.css">
-        <link rel="stylesheet" href="css/header.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/body.css">
-        <style>
-            /* Allgemein */
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
+    <!-- Skript Bibliotheken -->
+    <!-- Packen von ZIP-Dateien -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- Icons für Download-Button -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-            footer {
-                width: calc(100% - 250px); /* Breite der Sidebar abziehen */
-                left: 250px; /* Footer beginnt nach der Sidebar */
-            }
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/mascot.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/body.css">
+    <link rel="stylesheet" href="css/tutor.css">
+</head>
 
-
-            /*Buttons*/
-            /*Hertunterladen Buttons*/
-            .download-btn {
-                margin-left: 10px;
-                padding: 10px 20px;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                border-radius: 3px;
-                cursor: pointer;
-            }
-            .download-btn:hover {
-                background-color: #0056b3;
-            }
-
-            /*Löschen Buttons*/
-            .delete-btn {
-                margin-left: 10px;
-                padding: 10px 20px;
-                background-color: hsl(4, 90%, 58%);
-                color: white;
-                border: none;
-                border-radius: 3px;
-                cursor: pointer;
-            }
-            .delete-btn:hover {
-                background-color: hsl(4, 90%, 43%);
-            }
-
-            /* Save Button */
-            .save-btn {
-                background-color: #28a745;
-                color: white;
-                padding: 10px 20px;
-                border: none;
-                cursor: pointer;
-                border-radius: 5px;
-            }
-            .save-btn:hover {
-                background-color: #218838;
-            }
-
-
-            /* Allgemeine Stile für die Felder */
-            .field, .field-documents {
-                margin-top: 20px;
-                padding: 20px;
-                background-color: #f9f9f9;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                max-width: calc(100% - 350px); /* Maximal die Breite bis zum Mascot-Bild */
-            }
-
-            .field h2, .field-documents h2 {
-                margin-bottom: 10px;
-            }
-
-
-            /* Auflistungen der Dateien */
-            /* Liste */
-            #documents-list ul, #submissions-list ul {
-                list-style-type: none;
-                padding-left: 0;
-            }
-            #documents-list li, #submissions-list li {
-                margin-bottom: 10px;
-            }
-            #documents-list a, #submissions-list a {
-                text-decoration: none;
-                color: #007bff;
-            }
-
-            /* Listenelemente */
-            .document-item {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 10px;
-                border: 1px solid #ddd;
-            }
-            .document-item a {
-                text-decoration: none;
-                color: #007bff;
-                flex-grow: 1;
-            }
-
-
-            /*Abgaben*/
-            .drag-drop-area {
-                width: 100%;
-                height: 150px;
-                border: 2px dashed #007bff;
-                text-align: center;
-                line-height: 150px;
-                color: #007bff;
-                background-color: #f9f9f9;
-                border-radius: 5px;
-                margin-bottom: 20px;
-            }
-
-
-            /*Feedback*/
-            textarea {
-                width: 100%;
-                height: 150px;
-                margin-bottom: 10px;
-                padding: 10px;
-                font-size: 1rem;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-            }
-
-            .student-button {
-                background: #4CAF50;
-                color: white;
-                padding: 10px;
-                border: none;
-                width: 100%;
-                text-align: left;
-                cursor: pointer;
-                border-radius: 5px;
-                margin-bottom: 5px;
-            }
-
-            .student-button:hover {
-                background-color: #45a049;
-            }
-        </style>
-    </head>
-    <body>
-        <!-- Header -->
-        <header>
-            <div style="display: flex; align-items: center;">
-                <a href="#" onclick="redirectToMainPage()">
-                    <img src="textures/logo-header.png" alt="Logo">
-                </a>
-                <h1 id="path">Main</h1>
-            </div>
-            <div class="button-group">
-                <button class="logout-button" onclick="logout()">Logout</button>
-            </div>
-        </header>
-
-        <!-- Sidebar -->
-        <div class="sidebar">
+<body>
+    <!-- Header -->
+    <header>
+        <div style="display: flex; align-items: center;">
             <a href="#" onclick="redirectToMainPage()">
-                <h2 id="student-list">Studenten TODO</h2>
+                <img src="textures/logo-header.png" alt="Logo">
             </a>
-            <div id="fachList"></div>
+            <h1 id="path">Main</h1>
         </div>
+        <div class="button-group">
+            <button class="logout-button" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a href="#" onclick="redirectToMainPage()">
+            <h2 id="student-list">Studenten TODO</h2>
+        </a>
+        <div id="fachList"></div>
+    </div>
 
 
-        <!-- Main Inhalt -->
-        <main>
+    <!-- Main Inhalt -->
+    <main>
+        <div class="column">
             <h1 id="pageTitle">test TODO</h1>
-            <div class="mascot-container">
-                <img src="textures/battery1.png" alt="Mascot">
-            </div>
-
             <!-- Unterlagen Feld -->
             <div class="field-documents">
                 <h2>Unterlagen</h2>
@@ -226,248 +85,266 @@
             </div>
 
             <!-- Punktzahl -->
-             <div class="field">
+            <div class="field">
                 <h2>Punktzahl</h2>
                 <input id="points" type="number" min="0" max="15" value="0">
                 <button class="save-btn" onclick="savePoints()">Speichern</button>
-             </div>
+            </div>
 
             <!-- Feedback Feld -->
             <div class="field">
                 <h2>Feedback</h2> <!-- TODO -->
                 <textfield id="feedback-text"></textfield>
-        </main>
+            </div>
+        </div>
 
-        <!-- Footer -->
-        <footer>
-            <p id="userInfo">Sie sind angemeldet als <span id="username"></span> (<span id="role"></span>)</p>
-        </footer>
 
-        <!-- Scripts -->
-        <script src="js/logout.js"></script>
-        <script src="js/redirectToMainPage.js"></script>
-        <script src="js/loadLoginData.js"></script>
-        <script src="js/loadSidebar.js"></script>
-        <script>
-            // Die Daten für Fächer und Aufgabendata.subjects.subjectName.assignmentName.users.
-            const data = {
-                "subjects": [
-                    {
-                        "name": "Programmieren_I",
-                        "assignments": [
-                            {"name": "Assignment_01", "link":"./documents/Programmieren_I/Assignment_1/",
-                            "documents-student":[
+        <!--Macot Container-->
+        <div class="mascot-container">
+            <img src="textures/battery1.png" alt="Mascot">
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p id="userInfo">Sie sind angemeldet als <span id="username"></span> (<span id="role"></span>)</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/logout.js"></script>
+    <script src="js/redirectToMainPage.js"></script>
+    <script src="js/loadLoginData.js"></script>
+    <script src="js/loadSidebar.js"></script>
+    <script>
+        // Die Daten für Fächer und Aufgabendata.subjects.subjectName.assignmentName.users.
+        const data = {
+            "subjects": [
+                {
+                    "name": "Programmieren_I",
+                    "assignments": [
+                        {
+                            "name": "Assignment_01", "link": "./documents/Programmieren_I/Assignment_1/",
+                            "documents-student": [
                                 "Aufgabenstellung.txt",
                                 "Korrekturhinweise.txt"
-                            ], "documents-tutor":[
+                            ], "documents-tutor": [
                                 "Aufgabenstellung.txt",
                                 "Korrekturhinweise.txt",
                                 "Musterloesung.txt"
-                            ], "users":[
+                            ], "users": [
                                 {
-                                    "username":"Till",
+                                    "username": "Till",
                                     "role": "student",
-                                    "submissions":[
-                                    "Antworten.txt",
-                                    "Weihnachtsbaum.jpg",
-                                    "Weihnachtsbaum.pdf"
-                                ], "correction":["Korrektur.txt"], "points":"15", "feedback":"Hier ist Feedback"},
-                                    {
-                                        "username":"Vlad",
-                                        "role": "student",
-                                        "submissions":[
-                                        ], "correction":"", "points":"", "feedback":""},
-                                    {
-                                        "username":"Johann",
-                                        "role": "student",
-                                        "submissions":[
-                                        ], "correction":"", "points":"", "feedback":""},
-                                    {
-                                        "username": "tim",
-                                        "role": "tutor",
-                                        "students": ["Till", "Vlad", "Johann"]
-                                    }
-                            ]},
-                            {"name": "Assignment_02"},
-                            {"name": "Assignment_03"},
-                            {"name": "Assignment_04"},
-                            {"name": "Assignment_06"},
-                            {"name": "Assignment_05"}
-                        ]
-                    },
-                    {
-                        "name": "Datenstrukturen_und_Algorithmen",
-                        "assignments": [
-                            {"name": "Assignment_01", "link":"./documents/Datenstrukturen_und_Algorithmen/Assignment_01/",
-                            "documents-student":[
+                                    "submissions": [
+                                        "Antworten.txt",
+                                        "Weihnachtsbaum.jpg",
+                                        "Weihnachtsbaum.pdf"
+                                    ], "correction": ["Korrektur.txt"], "points": "15", "feedback": "Hier ist Feedback"
+                                },
+                                {
+                                    "username": "Vlad",
+                                    "role": "student",
+                                    "submissions": [
+                                    ], "correction": "", "points": "", "feedback": ""
+                                },
+                                {
+                                    "username": "Johann",
+                                    "role": "student",
+                                    "submissions": [
+                                    ], "correction": "", "points": "", "feedback": ""
+                                },
+                                {
+                                    "username": "tim",
+                                    "role": "tutor",
+                                    "students": ["Till", "Vlad", "Johann"]
+                                }
+                            ]
+                        },
+                        { "name": "Assignment_02" },
+                        { "name": "Assignment_03" },
+                        { "name": "Assignment_04" },
+                        { "name": "Assignment_06" },
+                        { "name": "Assignment_05" }
+                    ]
+                },
+                {
+                    "name": "Datenstrukturen_und_Algorithmen",
+                    "assignments": [
+                        {
+                            "name": "Assignment_01", "link": "./documents/Datenstrukturen_und_Algorithmen/Assignment_01/",
+                            "documents-student": [
                                 "Nichts.txt"
-                            ], "documents-tutor":[
-                               "Musterloesung.txt"
-                                ],
-                            "users":[
+                            ], "documents-tutor": [
+                                "Musterloesung.txt"
+                            ],
+                            "users": [
                                 {
-                                    "username":"till",
+                                    "username": "till",
                                     "role": "student",
-                                    "submissions":[
-                                    "Nichts.txt"
-                                ], "correction":"", "points":"", "feedback":""},
-                                    {
-                                        "username":"vlad",
-                                        "role": "student",
-                                        "submissions":[
-                                        ], "correction":"", "points":"", "feedback":""},
-                                    {
-                                        "username":"johann",
-                                        "role": "student",
-                                        "submissions":[
-                                        ], "correction":"", "points":"", "feedback":""},
+                                    "submissions": [
+                                        "Nichts.txt"
+                                    ], "correction": "", "points": "", "feedback": ""
+                                },
+                                {
+                                    "username": "vlad",
+                                    "role": "student",
+                                    "submissions": [
+                                    ], "correction": "", "points": "", "feedback": ""
+                                },
+                                {
+                                    "username": "johann",
+                                    "role": "student",
+                                    "submissions": [
+                                    ], "correction": "", "points": "", "feedback": ""
+                                },
 
-                                    {
-                                        "username": "tim",
-                                        "role": "tutor",
-                                        "students": ["till", "vlad", "johann"]
-                                    }
-                            ]},
-                            {"name": "Assignment_02"},
-                            {"name": "Assignment_03"}
-                        ]
-                    }
-                ]
-            };
-            let userdata = 0;
+                                {
+                                    "username": "tim",
+                                    "role": "tutor",
+                                    "students": ["till", "vlad", "johann"]
+                                }
+                            ]
+                        },
+                        { "name": "Assignment_02" },
+                        { "name": "Assignment_03" }
+                    ]
+                }
+            ]
+        };
+        let userdata = 0;
 
-            // Funktion zum Extrahieren von URL-Parametern
-            function getUrlParameter(name) {
-                const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get(name);
+        // Funktion zum Extrahieren von URL-Parametern
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        function downloadAllFiles(files) {
+            // Funktion zum Herunterladen aller Dokumente implementieren
+            const zip = new JSZip();
+
+            // Füge die Dateien zum ZIP hinzu
+            files.forEach(file => {
+                zip.file(file.name, file.content); // Dateiname und Inhalt hinzufügen
+            });
+
+            // Generiere die ZIP-Datei
+            zip.generateAsync({ type: "blob" }).then(function (content) {
+                // Erstelle ein Download-Link mit Blob-URL
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(content);
+                link.download = "alle_dateien.zip"; // Name der heruntergeladenen ZIP-Datei
+                link.click(); // Simuliere den Klick auf den Link, um den Download zu starten
+            });
+        }
+
+        // Funktion zum Umschalten der Dropdown-Ansicht für Aufgaben
+        function toggleDropdown(id) {
+            const content = document.getElementById(id);
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Wenn die Seite geladen ist, die Fächer und Aufgaben laden und die URL-Parameter lesen
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fach und Assignment aus Url lesen
+            const subjectName = getUrlParameter('subject');
+            const assignmentName = getUrlParameter('assignment');
+            const userName = sessionStorage.getItem("username");
+            let studentName = getUrlParameter('student');
+
+            // Fach in data suchen
+            const subject = data.subjects.find(sub => sub.name === subjectName);
+            if (!subject) {
+                console.error(`Fach ${subjectName} nicht gefunden`);
+                return;
             }
 
-            function downloadAllFiles(files) {
-                // Funktion zum Herunterladen aller Dokumente implementieren
-                const zip = new JSZip();
-
-                // Füge die Dateien zum ZIP hinzu
-                files.forEach(file => {
-                    zip.file(file.name, file.content); // Dateiname und Inhalt hinzufügen
-                });
-
-                // Generiere die ZIP-Datei
-                zip.generateAsync({ type: "blob" }).then(function(content) {
-                    // Erstelle ein Download-Link mit Blob-URL
-                    const link = document.createElement("a");
-                    link.href = URL.createObjectURL(content);
-                    link.download = "alle_dateien.zip"; // Name der heruntergeladenen ZIP-Datei
-                    link.click(); // Simuliere den Klick auf den Link, um den Download zu starten
-                });
+            // Aufgabe in data suchen
+            const assignments = subject.assignments.find(assign => assign.name === assignmentName);
+            if (!assignments) {
+                console.error(`Aufgabe ${assignmentName} nicht gefunden`);
+                return;
             }
 
-            // Funktion zum Umschalten der Dropdown-Ansicht für Aufgaben
-            function toggleDropdown(id) {
-                const content = document.getElementById(id);
-                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            // Benutzer in data suchen
+            userdata = assignments.users.find(usr => usr.username === userName);
+            if (!userdata) {
+                console.error(`Benutzerdaten nicht gefunden`);
+                return;
             }
 
-            // Wenn die Seite geladen ist, die Fächer und Aufgaben laden und die URL-Parameter lesen
-            document.addEventListener('DOMContentLoaded', () => {
-                // Fach und Assignment aus Url lesen
-                const subjectName = getUrlParameter('subject');
-                const assignmentName = getUrlParameter('assignment');
-                const userName = sessionStorage.getItem("username");
-                let studentName = getUrlParameter('student');
+            if (!studentName && userdata.role === "tutor" && userdata.students.length > 0) {
+                studentName = userdata.students[0];
+                window.location.href = `assignment-tutor.html?subject=${subjectName}&assignment=${assignmentName}&student=${studentName}`;
+                return;
+            }
 
-                // Fach in data suchen
-                const subject = data.subjects.find(sub => sub.name === subjectName);
-                if (!subject) {
-                    console.error(`Fach ${subjectName} nicht gefunden`);
-                    return;
-                }
+            const studentData = assignments.users.find(usr => usr.username === studentName);
+            if (!studentData) {
+                console.error(`Studentendaten nicht gefunden`);
+                return;
+            }
 
-                // Aufgabe in data suchen
-                const assignments = subject.assignments.find(assign => assign.name === assignmentName);
-                if (!assignments) {
-                    console.error(`Aufgabe ${assignmentName} nicht gefunden`);
-                    return;
-                }
+            // Den Titel im Main-Bereich setzen
+            if (subjectName && assignmentName) {
+                document.getElementById('pageTitle').textContent = subjectName.replaceAll("_", " ") + ' - ' + assignmentName.replaceAll("_", " ") + ' - ' + studentName;
+            }
 
-                // Benutzer in data suchen
-                userdata = assignments.users.find(usr => usr.username === userName);
-                if (!userdata) {
-                    console.error(`Benutzerdaten nicht gefunden`);
-                    return;
-                }
+            document.getElementById('path').textContent += ' ->' + subjectName.replaceAll("_", " ") + ' ->' + assignmentName.replaceAll("_", " ") + ' ->' + studentName;
 
-                if (!studentName && userdata.role === "tutor" && userdata.students.length > 0) {
-                    studentName = userdata.students[0];
-                    window.location.href = `assignment-tutor.html?subject=${subjectName}&assignment=${assignmentName}&student=${studentName}`;
-                    return;
-                }
+            document.getElementById('student-list').textContent = subjectName.replaceAll("_", " ") + '\n' + assignmentName.replaceAll("_", " ");
 
-                const studentData = assignments.users.find(usr => usr.username === studentName);
-                if (!studentData) {
-                    console.error(`Studentendaten nicht gefunden`);
-                    return;
-                }
-
-                // Den Titel im Main-Bereich setzen
-                if (subjectName && assignmentName) {
-                    document.getElementById('pageTitle').textContent = subjectName.replaceAll("_", " ") + ' - ' + assignmentName.replaceAll("_", " ") + ' - ' + studentName;
-                }
-
-                document.getElementById('path').textContent += ' ->' + subjectName.replaceAll("_", " ") + ' ->' + assignmentName.replaceAll("_", " ") + ' ->' + studentName;
-
-                document.getElementById('student-list').textContent = subjectName.replaceAll("_", " ") + '\n' + assignmentName.replaceAll("_", " ");
-
-                if (userdata.role === "tutor") {
-                    const studentList = document.createElement('div');
-                    userdata.students.forEach(student => {
-                        const studentButton = document.createElement('button');
-                        studentButton.textContent = student;
-                        studentButton.classList.add('student-button');
-                        studentButton.addEventListener('click', function () {
-                            window.location.href = `assignment-tutor.html?subject=${subjectName}&assignment=${assignmentName}&student=${student}`;
-                        });
-                        studentList.appendChild(studentButton);
+            if (userdata.role === "tutor") {
+                const studentList = document.createElement('div');
+                userdata.students.forEach(student => {
+                    const studentButton = document.createElement('button');
+                    studentButton.textContent = student;
+                    studentButton.classList.add('student-button');
+                    studentButton.addEventListener('click', function () {
+                        window.location.href = `assignment-tutor.html?subject=${subjectName}&assignment=${assignmentName}&student=${student}`;
                     });
-                    document.querySelector('.sidebar').appendChild(studentList);
-                }
-
-                const submissionsList = document.querySelector('.field #documents-list ul');
-                submissionsList.innerHTML = '';
-                studentData.submissions.forEach(submission => {
-                    const listItem = document.createElement('li');
-                    const link = document.createElement('a');
-                    link.href = `./documents/${subjectName}/${assignmentName}/${studentName}/${submission}`;
-                    link.textContent = submission;
-                    listItem.appendChild(link);
-                    submissionsList.appendChild(listItem);
+                    studentList.appendChild(studentButton);
                 });
+                document.querySelector('.sidebar').appendChild(studentList);
+            }
 
-                const documentsList = document.querySelector('.field-documents #documents-list ul');
-                documentsList.innerHTML = '';
-                const documents = assignments['documents-tutor'];
-                documents.forEach(doc => {
-                    const listItem = document.createElement('li');
-                    const link = document.createElement('a');
-                    link.href = `./documents/${subjectName}/${assignmentName}/documents/${doc}`;
-                    link.textContent = doc;
-                    listItem.appendChild(link);
-                    documentsList.appendChild(listItem);
-                });
+            const submissionsList = document.querySelector('.field #documents-list ul');
+            submissionsList.innerHTML = '';
+            studentData.submissions.forEach(submission => {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = `./documents/${subjectName}/${assignmentName}/${studentName}/${submission}`;
+                link.textContent = submission;
+                listItem.appendChild(link);
+                submissionsList.appendChild(listItem);
+            });
 
-                const feedbackText = document.getElementById('feedback-text');
-                if (feedbackText)
-                    feedbackText.innerText = studentData.feedback;
+            const documentsList = document.querySelector('.field-documents #documents-list ul');
+            documentsList.innerHTML = '';
+            const documents = assignments['documents-tutor'];
+            documents.forEach(doc => {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = `./documents/${subjectName}/${assignmentName}/documents/${doc}`;
+                link.textContent = doc;
+                listItem.appendChild(link);
+                documentsList.appendChild(listItem);
+            });
 
-                const points = document.getElementById('points');
-                if (studentData.points)
-                    points.value = studentData.points;
+            const feedbackText = document.getElementById('feedback-text');
+            if (feedbackText)
+                feedbackText.innerText = studentData.feedback;
 
-                const submisisonList = document.getElementById('submissions-list');
-                const correction = studentData.correction;
-                correction.forEach(correction => {
-                    const fileElement = document.createElement('div');
-                    fileElement.classList.add('submission');
-                    fileElement.innerHTML = `
+            const points = document.getElementById('points');
+            if (studentData.points)
+                points.value = studentData.points;
+
+            const submisisonList = document.getElementById('submissions-list');
+            const correction = studentData.correction;
+            correction.forEach(correction => {
+                const fileElement = document.createElement('div');
+                fileElement.classList.add('submission');
+                fileElement.innerHTML = `
                         <li class="document-item">
                             <a href="./documents/${subjectName}/${assignmentName}/${studentName}/${correction}" target="_blank"><span>${correction}</span></a>
                             <div class="button-group">
@@ -476,85 +353,85 @@
                             </div>
                         </li>
                     `;
-                    submisisonList.appendChild(fileElement);
+                submisisonList.appendChild(fileElement);
+            });
+        });
+
+        // Funktion, um die Dateien als ZIP herunterzuladen
+        document.querySelectorAll('.download-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const buttonID = this.id;
+                const files = [];
+
+                let documentLinks;
+                let filename;
+
+                // Hier wird die spezifische Liste der Dokumente basierend auf der Klasse des Buttons ausgewählt
+                if (buttonID === 'downloadAllDocuments') {
+                    documentLinks = document.querySelectorAll('.field-documents #documents-list a');
+                    filename = "documents.zip";
+                } else if (buttonID === 'downloadAllSubmissions') {
+                    documentLinks = document.querySelectorAll('.field #documents-list a');
+                    filename = "submissions.zip";
+                }
+
+                documentLinks.forEach(link => {
+                    const file = {
+                        name: link.textContent,
+                        content: link.href
+                    };
+                    files.push(file);
                 });
-            });
 
-            // Funktion, um die Dateien als ZIP herunterzuladen
-            document.querySelectorAll('.download-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const buttonID = this.id;
-                    const files = [];
+                const zip = new JSZip();
 
-                    let documentLinks;
-                    let filename;
-
-                    // Hier wird die spezifische Liste der Dokumente basierend auf der Klasse des Buttons ausgewählt
-                    if(buttonID === 'downloadAllDocuments') {
-                        documentLinks = document.querySelectorAll('.field-documents #documents-list a');
-                        filename= "documents.zip";
-                    }else if(buttonID === 'downloadAllSubmissions'){
-                        documentLinks = document.querySelectorAll('.field #documents-list a');
-                        filename = "submissions.zip";
-                    }
-
-                    documentLinks.forEach(link => {
-                        const file = {
-                            name: link.textContent,
-                            content: link.href
-                        };
-                        files.push(file);
-                    });
-
-                    const zip = new JSZip();
-
-                    // Füge die Dateien zum ZIP hinzu
-                    files.forEach(file => {
-                        zip.file(file.name, file.content); // Dateiname und Inhalt hinzufügen
-                    });
-
-                    // Generiere die ZIP-Datei
-                    zip.generateAsync({ type: "blob" })
-                        .then(function(content) {
-                            // Erstelle ein Download-Link mit Blob-URL
-                            const link = document.createElement("a");
-                            link.href = URL.createObjectURL(content);
-                            link.download = filename; // Name der heruntergeladenen ZIP-Datei
-                            link.click(); // Simuliere den Klick auf den Link, um den Download zu starten
-                        });
+                // Füge die Dateien zum ZIP hinzu
+                files.forEach(file => {
+                    zip.file(file.name, file.content); // Dateiname und Inhalt hinzufügen
                 });
+
+                // Generiere die ZIP-Datei
+                zip.generateAsync({ type: "blob" })
+                    .then(function (content) {
+                        // Erstelle ein Download-Link mit Blob-URL
+                        const link = document.createElement("a");
+                        link.href = URL.createObjectURL(content);
+                        link.download = filename; // Name der heruntergeladenen ZIP-Datei
+                        link.click(); // Simuliere den Klick auf den Link, um den Download zu starten
+                    });
             });
+        });
 
-            // Drag & Drop für das Hochladen von Dateien
-            const dropArea = document.getElementById('drag-drop-area');
-            dropArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                dropArea.style.backgroundColor = '#f0f0f0'; // Bei Drag über der Fläche
-            });
+        // Drag & Drop für das Hochladen von Dateien
+        const dropArea = document.getElementById('drag-drop-area');
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.style.backgroundColor = '#f0f0f0'; // Bei Drag über der Fläche
+        });
 
-            dropArea.addEventListener('dragleave', () => {
-                dropArea.style.backgroundColor = ''; // Wenn die Datei den Bereich verlässt
-            });
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.style.backgroundColor = ''; // Wenn die Datei den Bereich verlässt
+        });
 
-            dropArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                dropArea.style.backgroundColor = ''; // Rückgängig machen der Hintergrundfarbe
-                const files = e.dataTransfer.files;
-                console.log(files);
-                uploadFiles(files);
-            });
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.style.backgroundColor = ''; // Rückgängig machen der Hintergrundfarbe
+            const files = e.dataTransfer.files;
+            console.log(files);
+            uploadFiles(files);
+        });
 
-            function uploadFiles(files) {
-                const submissionList = document.getElementById('submissions-list');
-                const subjectName = getUrlParameter('subject');
-                const assignmentName = getUrlParameter('assignment');
-                const username = sessionStorage.getItem("username");
+        function uploadFiles(files) {
+            const submissionList = document.getElementById('submissions-list');
+            const subjectName = getUrlParameter('subject');
+            const assignmentName = getUrlParameter('assignment');
+            const username = sessionStorage.getItem("username");
 
-                for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
-                    const fileElement = document.createElement('div');
-                    fileElement.classList.add('submission');
-                    fileElement.innerHTML = `
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const fileElement = document.createElement('div');
+                fileElement.classList.add('submission');
+                fileElement.innerHTML = `
                         <li class="document-item">
                             <a href="./documents/${subjectName}/${assignmentName}/${username}/${file.name}" target="_blank"><span>${file.name}</span></a>
                             <div class="button-group">
@@ -563,25 +440,26 @@
                             </div>
                         </li>
                     `;
-                    submissionList.appendChild(fileElement);
-                }
+                submissionList.appendChild(fileElement);
             }
+        }
 
-            function deleteFile(button) {
-                const fileElement = button.parentElement.parentElement;
-                fileElement.remove();
+        function deleteFile(button) {
+            const fileElement = button.parentElement.parentElement;
+            fileElement.remove();
+        }
+
+        // Punktzahl speichern
+        function savePoints() {
+            const points = document.getElementById('points').value;
+            if (points >= 0 && points <= 15) {
+                alert("Es wurden " + points + " Punkte eingetragen!");
+            } else {
+                alert("Ungültige Punktzahl!");
             }
+        }
 
-            // Punktzahl speichern
-            function savePoints() {
-                const points = document.getElementById('points').value;
-                if (points >= 0 && points <= 15) {
-                    alert("Es wurden " + points + " Punkte eingetragen!");
-                } else {
-                    alert("Ungültige Punktzahl!");
-                }
-            }
+    </script>
+</body>
 
-        </script>
-    </body>
 </html>
