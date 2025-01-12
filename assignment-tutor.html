@@ -185,6 +185,12 @@
             .upload-label:hover{
                 background-color: #0056b3;
             }
+
+            .delete-message {
+                color: red;
+                font-size: 20px;
+                margin-top: 10px;
+            }
         </style>
     </head>
     <body>
@@ -571,7 +577,7 @@
                 uploadFiles(files);
             });
 
-            const fileInput = document.createElement('input');
+            const fileInput = document.getElementById('file-input');
             fileInput.addEventListener('change', (e) => {
                 const files = e.target.files;
                 uploadFiles(files);
@@ -602,7 +608,19 @@
 
             function deleteFile(button) {
                 const fileElement = button.parentElement.parentElement;
-                fileElement.remove();
+                const fileName = fileElement.querySelector('span').textContent;
+                if(confirm(`Möchtest du die Datei ${fileName} wirklich löschen?`)) {
+                    fileElement.remove();
+
+                    const message = document.createElement('p');
+                    message.classList.add('delete-message');
+                    message.textContent = `Die Datei ${fileName} wurde gelöscht`;
+                    document.getElementById('submissions-list').appendChild(message);
+
+                    setTimeout(() => {
+                        message.remove();
+                    }, 5000);
+                }
             }
 
             // Punktzahl speichern
