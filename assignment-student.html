@@ -11,6 +11,8 @@
         <!-- Skript Bibliotheken -->
         <!-- Packen von ZIP-Dateien -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <!-- Countdown für die Abgabefrist -->
+        <script src="https://cdn.jsdelivr.net/npm/countdown@2.6.0/countdown.min.js"></script>
         <!-- Icons für Download-Button -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -174,6 +176,7 @@
         <!-- Main Inhalt -->
         <main>
             <h1 id="pageTitle"></h1>
+            <div id="countdown"></div>
             <div class="mascot-container">
                 <img src="textures/battery1.png" alt="Mascot">
             </div>
@@ -234,7 +237,7 @@
                     {
                         "name": "Programmieren_I", 
                         "assignments": [
-                            {"name": "Assignment_01", "link":"./documents/Programmieren_I/Assignment_1/", 
+                            {"name": "Assignment_01", "link":"./documents/Programmieren_I/Assignment_1/", "dueDate":"2025-03-31T23:59:59",
                             "documents-student":[
                                 "Aufgabenstellung.txt", 
                                 "Korrekturhinweise.txt"
@@ -421,6 +424,13 @@
                 loadSidebar();
 
                 displayAssignmentDetails(subjectName, assignmentName, assignments);
+
+                if(assignments?.dueDate){
+                    startCountdown(assignments.dueDate);
+                } else  {
+                    document.getElementById('countdown').textContent = "Keine Abgabefrist gesetzt";
+                }
+
             });
 
             // Funktion, um die Dateien als ZIP herunterzuladen
@@ -499,6 +509,34 @@
                 } else {
                     alert('Bitte gib Feedback ein!');
                 }
+            }
+
+            function startCountdown(dueDate) {
+                const countdownElement = document.getElementById('countdown');
+
+                function updateCountdown() {
+                    const now = new Date();
+                    const targetDate = new Date(dueDate);
+
+                    const timeDiff = targetDate - now;
+
+                    if (timeDiff <= 0) {
+                        countdownElement.textContent = "Abgabefrist ist abgelaufen!";
+                        clearInterval(interval);
+                        return;
+                    }
+
+                    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                    countdownElement.textContent = `${days} Tage, ${hours} Stunden, ${minutes} Minuten, ${seconds} Sekunden`;
+                }
+
+                const interval = setInterval(updateCountdown, 1000);
+
+                updateCountdown();
             }
         </script>
     </body>
