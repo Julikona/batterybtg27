@@ -126,15 +126,20 @@
 
             /*Abgaben*/
             .drag-drop-area {
+                position: relative;
                 width: 100%;
                 height: 150px;
                 border: 2px dashed #007bff;
                 text-align: center;
-                line-height: 150px;
+                line-height: 1.5;
                 color: #007bff;
                 background-color: #f9f9f9;
                 border-radius: 5px;
                 margin-bottom: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
             }
 
 
@@ -147,6 +152,24 @@
                 font-size: 1rem;
                 border: 1px solid #ddd;
                 border-radius: 5px;
+            }
+
+            #file-input{
+                display: none;
+            }
+
+            .upload-label{
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: white;
+                border-radius: 5px;
+                cursor: pointer;
+                text-align: center;
+            }
+
+            .upload-label:hover{
+                background-color: #0056b3;
             }
         </style>
     </head>
@@ -198,6 +221,10 @@
                 <h2>Abgaben</h2>
                 <div id="drag-drop-area" class="drag-drop-area">
                     <p>Ziehe hier deine Dateien zum Hochladen</p>
+                    <div>
+                        <label for="file-input" class="upload-label">oder Datei auswählen</label>
+                        <input id="file-input" type="file" multiple>
+                    </div>
                 </div>
                 <div id="submissions-list">
                     <!-- Hochgeladene Dateien werden hier angezeigt -->
@@ -469,6 +496,12 @@
                 dropArea.style.backgroundColor = ''; // Rückgängig machen der Hintergrundfarbe
                 const files = e.dataTransfer.files;
                 console.log(files);
+                uploadFiles(files);
+            });
+
+            const fileInput = document.getElementById('file-input');
+            fileInput.addEventListener('change', (e) => {
+                const files = e.target.files;
                 uploadFiles(files);
             });
 
