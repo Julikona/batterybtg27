@@ -199,11 +199,16 @@
         <!-- Header -->
         <header>
             <div style="display: flex; align-items: center;">
+                <!-- Logo -->
                 <a href="#" onclick="redirectToMainPage()">
                     <img src="textures/logo-header.png" alt="Logo">
                 </a>
-                <h1 id="path">Main</h1>
+
+                <!-- Title -->
+                <h1>Main</h1>
             </div>
+
+            <!-- Logout -->
             <div class="button-group">
                 <button class="logout-button" onclick="logout()">Logout</button>
             </div>
@@ -447,8 +452,6 @@
                 if (subjectName && assignmentName) {
                     document.getElementById('pageTitle').textContent = subjectName.replaceAll("_", " ") + ' - ' + assignmentName.replaceAll("_", " ") + ' - ' + studentName;
                 }
-
-                document.getElementById('path').textContent += ' ->' + subjectName.replaceAll("_", " ") + ' ->' + assignmentName.replaceAll("_", " ") + ' ->' + studentName;
 
                 document.getElementById('student-list').textContent = subjectName.replaceAll("_", " ") + '\n' + assignmentName.replaceAll("_", " ");
 
