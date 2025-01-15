@@ -9,41 +9,18 @@
     <title>Login Seite</title>
 
     <!-- CSS -->
+    <link rel="stylesheet" href="css/mascot.css">
+    <link rel="stylesheet" href="css/body.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/main.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            gap: 20px;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        header {
-            background-color: #333;
-            color: white;
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-        }
-
-        header img {
-            height: 40px;
-            margin-right: 15px;
-        }
-
         main {
             flex: 1;
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f4f4f9;
-            padding: 20px;
         }
 
         .login-container {
@@ -95,24 +72,9 @@
             background-color: #0056b3;
         }
 
-        .mascot-container {
-            position: fixed;
-            top: 50px;
-            right: 20px;
-            width: 300px;
-            height: 400px;
-            padding: 20px;
-            z-index: 1000;
-        }
-
-        .mascot-container img {
-            max-width: 100%;
-            height: auto;
-        }
-
         .speech-bubble {
             position: fixed;
-            top: 20px;
+            top: 300px;
             right: 20px;
             width: 200px;
             padding: 10px;
@@ -135,13 +97,6 @@
             border-left-width: 10px;
             margin-right: -5px;
             margin-top: -10px;
-        }
-
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px 20px;
         }
     </style>
 </head>
