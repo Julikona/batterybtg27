@@ -133,11 +133,11 @@
                 </a>
 
                 <!-- Titel/Navigation -->
-                <h1>Main</h1>
+                <h1>Main</h1> <!-- Change this text -->
             </div>
 
             <!-- Logout Button -->
-            <button class="logout-button" onclick="logout()">Logout</button>
+            <button class="logout-button" onclick="logout()">Logout</button> <!-- Change this text -->
         </header>
         <main>
             <!-- Fächer Dropdowns -->
@@ -145,7 +145,7 @@
                 <!-- Fach 1 -->
                 <div class="fach">
                     <!-- Dropdown Button -->
-                    <button class="full-width-button" onclick="toggleDropdown('fach-content-1')">Programmieren 1</button>
+                    <button class="full-width-button" onclick="toggleDropdown('fach-content-1')">Programmieren 1</button> <!-- Change this text -->
                     
                     <!-- Dropdown Inhalt -->
                     <div id="fach-content-1" class="fach-content"></div>
@@ -154,7 +154,7 @@
                 <!-- Fach 2 -->
                 <div class="fach">
                     <!-- Dropdown Button -->
-                    <button class="full-width-button" onclick="toggleDropdown('fach-content-2')">Datenstrukturen und Algorithmen</button>
+                    <button class="full-width-button" onclick="toggleDropdown('fach-content-2')">Datenstrukturen und Algorithmen</button> <!-- Change this text -->
                     
                     <!-- Dropdown Inhalt -->
                     <div id="fach-content-2" class="fach-content"></div>
@@ -163,15 +163,15 @@
 
             <!-- Großes Maskottchen rechts -->
             <div class="mascot-container">
-                <img src="textures/battery1.png" alt="Mascot">
+                <img src="textures/battery1.png" alt="Mascot"> <!-- Change the image source if needed -->
             </div>
             <div class="speech-bubble" id="speech-bubble">
-                <p id="speech-text">Das sind deine Fächer. Klick sie an</p>
+                <p id="speech-text">Das sind deine Fächer. Klick sie an</p> <!-- Change this text -->
             </div>
         </main>
         <footer>
             <!-- Text im Footer -->
-            <p id="userInfo">Sie sind angemeldet als <span id="username"></span> (<span id="role"></span>)</p>
+            <p id="userInfo">Sie sind angemeldet als <span id="username"></span> (<span id="role"></span>)</p> <!-- Change this text -->
         </footer>
 
         <!-- Scripts -->
@@ -220,13 +220,13 @@
                 data.subjects[i].assignments.forEach(assignment => {
                     const assign = document.createElement('a');
                     assign.href =  'assignment-tutor.html?subject=' + data.subjects[i].name + '&assignment=' + assignment.name;
-                    assign.textContent = assignment.name.replaceAll('_', ' ');
+                    assign.textContent = assignment.name.replaceAll('_', ' '); // Change this text if needed
                     fach.appendChild(assign);
                 })
             }
 
             function initializeText() {
-                document.getElementById('speech-text').textContent = "Das sind deine Fächer. Klick sie an";
+                document.getElementById('speech-text').textContent = "Das sind deine Fächer. Klick sie an"; // Change this text
             }
 
             // Funktion zum Umschalten der Sichtbarkeit eines Dropdown-Menüs

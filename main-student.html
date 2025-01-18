@@ -115,11 +115,11 @@
                 </a>
 
                 <!-- Titel/Navigation -->
-                <h1>Main</h1>
+                <h1>Main</h1> <!-- Change this text -->
             </div>
 
             <!-- Logout Button -->
-            <button class="logout-button" onclick="logout()">Logout</button>
+            <button class="logout-button" onclick="logout()">Logout</button> <!-- Change this text -->
         </header>
 
         <!-- Main Teil der Seite -->
@@ -131,17 +131,21 @@
         
             <!-- Großes Maskottchen rechts -->
             <div class="mascot-container">
-                <img src="textures/battery1.png" alt="Mascot">
+                <img src="textures/battery1.png" alt="Mascot"> <!-- Change the image source if needed -->
             </div>
             <div class="speech-bubble" id="speech-bubble">
+<<<<<<< Updated upstream
                 <p id="speech-text">Das sind deine Fächer. Klick sie an</p>
+=======
+                <p id="speech-text">Wähle das Assignment aus ,dass du bearbeiten willst :></p> <!-- Change this text -->
+>>>>>>> Stashed changes
             </div>
         </main>
         
         <!-- Fußleiste -->
         <footer>
             <!-- Text im Footer -->
-            <p id="userInfo">Sie sind angemeldet als <span id="username"></span> (<span id="role"></span>)</p>
+            <p id="userInfo">Sie sind angemeldet als <span id="username"></span> (<span id="role"></span>)</p> <!-- Change this text -->
         </footer>
 
         <!-- Scripts -->
@@ -197,7 +201,7 @@
                     // Button für das Fach
                     const fachButton = document.createElement('button');
                     fachButton.classList.add('full-width-button');
-                    fachButton.textContent = subject.name.replaceAll('_', ' ');
+                    fachButton.textContent = subject.name.replaceAll('_', ' '); // Change this text if needed
                     
                     // Erstelle die Fach-Inhalte
                     const fachContentDiv = document.createElement('div');
@@ -207,7 +211,7 @@
                     subject.assignments.forEach(assignment => {
                         const assignmentLink = document.createElement('a');
                         assignmentLink.href = 'assignment-student.html?subject=' + subject.name + '&assignment=' + assignment.name;
-                        assignmentLink.textContent = assignment.name.replaceAll('_', ' ');
+                        assignmentLink.textContent = assignment.name.replaceAll('_', ' '); // Change this text if needed
                         fachContentDiv.appendChild(assignmentLink);
                     });
                     
