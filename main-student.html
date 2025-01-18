@@ -150,78 +150,94 @@
         <script src="js/loadLoginData.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', () => {
-            // Die Daten für Fächer und Aufgaben
-            const data = {
-                "subjects": [
-                    {
-                        "name": "Programmieren_I", 
-                        "assignments": [
-                            {"name": "Assignment_01"},
-                            {"name": "Assignment_02"},
-                            {"name": "Assignment_03"},
-                            {"name": "Assignment_04"},
-                            {"name": "Assignment_06"},
-                            {"name": "Assignment_05"}
-                        ]
-                    },
-                    {
-                        "name": "Datenstrukturen_und_Algorithmen", 
-                        "assignments": [
-                            {"name": "Assignment_01"},
-                            {"name": "Assignment_02"},
-                            {"name": "Assignment_03"}
-                        ]
-                    }
-                ]
-            };
+                // Die Daten für Fächer und Aufgaben
+                const data = {
+                    "subjects": [
+                        {
+                            "name": "Programmieren_I", 
+                            "assignments": [
+                                {"name": "Assignment_01", "image": "textures/lädt.png"},
+                                {"name": "Assignment_02", "image": "textures/voll.png"},
+                                {"name": "Assignment_03", "image": "textures/voll.png"},
+                                {"name": "Assignment_04", "image": "textures/voll.png"},
+                                {"name": "Assignment_06", "image": "textures/lehr.png"},
+                                {"name": "Assignment_05", "image": "textures/lehr.png"}
+                            ]
+                        },
+                        {
+                            "name": "Datenstrukturen_und_Algorithmen", 
+                            "assignments": [
+                                {"name": "Assignment_01", "image": "textures/voll.png"},
+                                {"name": "Assignment_02", "image": "textures/muss_laden.png"},
+                                {"name": "Assignment_03", "image": "textures/lehr.png"}
+                            ]
+                        }
+                    ]
+                };
 
-            function initializeText() {
-                document.getElementById('speech-text').textContent = "Das sind deine Fächer. Klick sie an";
-            }
+                function initializeText() {
+                    document.getElementById('speech-text').textContent = "Das sind deine Fächer. Klick sie an";
+                }
 
-            // Funktion, um die Fächer und Aufgaben in die HTML-Struktur zu laden
-            function loadSubjects() {
-                const fachContainer = document.querySelector('.fach-container'); // Fach-Container auswählen
-                const userSubjects = sessionStorage.getItem("subjects");
+                // Funktion, um die Fächer und Aufgaben in die HTML-Struktur zu laden
+                function loadSubjects() {
+                    const fachContainer = document.querySelector('.fach-container'); // Fach-Container auswählen
+                    const userSubjects = sessionStorage.getItem("subjects");
 
-                data.subjects.forEach((subject) => {
-                    // Zeige nur die Fächer an, die ein Student auch wirklich hat
-                    if (!userSubjects.includes(subject.name)) {
-                        return;
-                    }
+                    data.subjects.forEach((subject) => {
+                        // Zeige nur die Fächer an, die ein Student auch wirklich hat
+                        if (!userSubjects.includes(subject.name)) {
+                            return;
+                        }
 
-                    // Erstelle den Fach-Div
-                    const fachDiv = document.createElement('div');
-                    fachDiv.classList.add('fach');
-                    
-                    // Button für das Fach
-                    const fachButton = document.createElement('button');
-                    fachButton.classList.add('full-width-button');
-                    fachButton.textContent = subject.name.replaceAll('_', ' '); // Change this text if needed
-                    
-                    // Erstelle die Fach-Inhalte
-                    const fachContentDiv = document.createElement('div');
-                    fachContentDiv.classList.add('fach-content');
-                    
-                    // Füge die Assignments hinzu
-                    subject.assignments.forEach(assignment => {
-                        const assignmentLink = document.createElement('a');
-                        assignmentLink.href = 'assignment-student.html?subject=' + subject.name + '&assignment=' + assignment.name;
-                        assignmentLink.textContent = assignment.name.replaceAll('_', ' '); // Change this text if needed
-                        fachContentDiv.appendChild(assignmentLink);
+                        // Erstelle den Fach-Div
+                        const fachDiv = document.createElement('div');
+                        fachDiv.classList.add('fach');
+                        
+                        // Button für das Fach
+                        const fachButton = document.createElement('button');
+                        fachButton.classList.add('full-width-button');
+                        fachButton.textContent = subject.name.replaceAll('_', ' '); // Change this text if needed
+                        
+                        // Erstelle die Fach-Inhalte
+                        const fachContentDiv = document.createElement('div');
+                        fachContentDiv.classList.add('fach-content');
+                        
+                        // Füge die Assignments hinzu
+                        subject.assignments.forEach(assignment => {
+                            const assignmentDiv = document.createElement('div');
+                            assignmentDiv.style.display = 'flex';
+                            assignmentDiv.style.alignItems = 'center';
+                            assignmentDiv.style.justifyContent = 'space-between'; // Align items to the right
+
+                            const assignmentLink = document.createElement('a');
+                            assignmentLink.href = 'assignment-student.html?subject=' + subject.name + '&assignment=' + assignment.name;
+                            assignmentLink.textContent = assignment.name.replaceAll('_', ' ');
+                            assignmentLink.style.flexGrow = '1'; // Extend the link to fill available width
+
+                            const assignmentImage = document.createElement('img');
+                            assignmentImage.src = assignment.image;
+                            assignmentImage.alt = 'Assignment Bild';
+                            assignmentImage.style.marginLeft = '10px';
+                            assignmentImage.style.width = '50px'; // Adjust the size as needed
+                            assignmentImage.style.height = '50px'; // Adjust the size as needed
+
+                            assignmentDiv.appendChild(assignmentLink);
+                            assignmentDiv.appendChild(assignmentImage);
+                            fachContentDiv.appendChild(assignmentDiv);
+                        });
+                        
+                        // Füge den Button und den Inhalt zum Fach-Div hinzu
+                        fachDiv.appendChild(fachButton);
+                        fachDiv.appendChild(fachContentDiv);
+                        
+                        // Füge das Fach-Div zum Fach-Container hinzu
+                        fachContainer.appendChild(fachDiv);
                     });
-                    
-                    // Füge den Button und den Inhalt zum Fach-Div hinzu
-                    fachDiv.appendChild(fachButton);
-                    fachDiv.appendChild(fachContentDiv);
-                    
-                    // Füge das Fach-Div zum Fach-Container hinzu
-                    fachContainer.appendChild(fachDiv);
-                });
-            }
+                }
 
-            // Initialisiere die Fächer beim Laden der Seite
-            loadSubjects();
+                // Initialisiere die Fächer beim Laden der Seite
+                loadSubjects();
             });
         </script>
     </body>
