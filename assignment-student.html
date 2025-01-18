@@ -11,6 +11,8 @@
         <!-- Skript Bibliotheken -->
         <!-- Packen von ZIP-Dateien -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <!-- Countdown für die Abgabefrist -->
+        <script src="https://cdn.jsdelivr.net/npm/countdown@2.6.0/countdown.min.js"></script>
         <!-- Icons für Download-Button -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -37,8 +39,8 @@
             /*Buttons*/
             /*Hertunterladen Buttons*/
             .download-btn {
-                margin-left: 10px;
-                padding: 10px 20px;
+                margin: 5px;
+                padding: 8px 12px;
                 background-color: #007bff;
                 color: white;
                 border: none;
@@ -51,8 +53,8 @@
 
             /*Löschen Buttons*/
             .delete-btn {
-                margin-left: 10px;
-                padding: 10px 20px;
+                padding: 8px 12px;
+                margin: 5px;
                 background-color: hsl(4, 90%, 58%);
                 color: white;
                 border: none;
@@ -67,7 +69,7 @@
             .save-btn {
                 background-color: #28a745;
                 color: white;
-                padding: 10px 20px;
+                padding: 8px 20px;
                 border: none;
                 cursor: pointer;
                 border-radius: 5px;
@@ -76,7 +78,8 @@
                 background-color: #218838;
             }
 
-            /* Allgemeine Stile für die Felder */
+
+            /* Allgemeiner Stile für die Felder */
             .field {
                 margin-top: 20px;
                 padding: 20px;
@@ -110,25 +113,31 @@
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 10px;
-                border: 1px solid #ddd;
+                padding-left: 10px;
+                border-radius: 3px;
+                background-color: #e2e2e2;
             }
             .document-item a {
                 text-decoration: none;
                 color: #007bff;
-                flex-grow: 1;
             }
 
             /*Abgaben*/
             .drag-drop-area {
+                position: relative;
                 width: 100%;
                 height: 150px;
                 border: 2px dashed #007bff;
                 text-align: center;
-                line-height: 150px;
+                line-height: 1.5;
                 color: #007bff;
                 background-color: #f9f9f9;
                 border-radius: 5px;
                 margin-bottom: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
             }
 
             /*Feedback*/
@@ -169,6 +178,30 @@
                 margin-right: -5px;
                 margin-top: -10px;
             }
+
+            #file-input{
+                display: none;
+            }
+
+            .upload-label{
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: white;
+                border-radius: 5px;
+                cursor: pointer;
+                text-align: center;
+            }
+
+            .upload-label:hover{
+                background-color: #0056b3;
+            }
+
+            .delete-message {
+                color: red;
+                font-size: 20px;
+                margin-top: 10px;
+            }
         </style>
     </head>
     <body>
@@ -196,6 +229,7 @@
         <!-- Main Inhalt -->
         <main>
             <h1 id="pageTitle"></h1>
+            <div id="countdown"></div>
             <div class="mascot-container">
                 <img id="mascot-image" src="textures/battery2.png" alt="Mascot">
                 <input type="file" id="file-input" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;" onchange="handleFileSelect(event)">
@@ -218,6 +252,10 @@
                 <h2>Abgaben</h2>
                 <div id="drag-drop-area" class="drag-drop-area">
                     <p>Ziehe hier deine Dateien zum Hochladen</p>
+                    <div>
+                        <label for="file-input" class="upload-label">oder Datei auswählen</label>
+                        <input id="file-input" type="file" multiple>
+                    </div>
                 </div>
                 <div id="submissions-list">
                     <!-- Hochgeladene Dateien werden hier angezeigt -->
@@ -240,7 +278,7 @@
             </div>
 
             <div class="speech-bubble" id="speech-bubble">
-                <p id="speech-text">Du kannst jetzt deine Dateien in das Feld drag&dropen oder kannst mich ankliken um eine gewählte Datei abzugeben</p>
+                <p id="speech-text">Du kannst jetzt deine Dateien in das Feld drag&dropen oder auf dem Button klicken und deine Datei auswählen.</Button></p>
             </div>
         </main>
 
@@ -261,7 +299,7 @@
                     {
                         "name": "Programmieren_I", 
                         "assignments": [
-                            {"name": "Assignment_01", "link":"./documents/Programmieren_I/Assignment_1/", 
+                            {"name": "Assignment_01", "link":"./documents/Programmieren_I/Assignment_1/", "dueDate":"2025-03-31T23:59:59",
                             "documents-student":[
                                 "Aufgabenstellung.txt", 
                                 "Korrekturhinweise.txt"
@@ -447,6 +485,13 @@
                 loadSidebar();
 
                 displayAssignmentDetails(subjectName, assignmentName, assignments);
+
+                if(assignments?.dueDate){
+                    startCountdown(assignments.dueDate);
+                } else  {
+                    document.getElementById('countdown').textContent = "Keine Abgabefrist gesetzt";
+                }
+
             });
 
             // Drag & Drop für das Hochladen von Dateien
@@ -477,6 +522,12 @@
                 }
             }
 
+            const fileInput = document.getElementById('file-input');
+            fileInput.addEventListener('change', (e) => {
+                const files = e.target.files;
+                uploadFiles(files);
+            });
+
             function uploadFiles(files) {
                 const submissionList = document.getElementById('submissions-list');
                 const subjectName = getUrlParameter('subject');
@@ -505,7 +556,19 @@
 
             function deleteFile(button) {
                 const fileElement = button.parentElement.parentElement;
-                fileElement.remove();
+                const fileName = fileElement.querySelector('span').textContent;
+                if(confirm(`Möchtest du die Datei ${fileName} wirklich löschen?`)) {
+                    fileElement.remove();
+
+                    const message = document.createElement('p');
+                    message.classList.add('delete-message');
+                    message.textContent = `Die Datei ${fileName} wurde gelöscht`;
+                    document.getElementById('submissions-list').appendChild(message);
+
+                    setTimeout(() => {
+                        message.remove();
+                    }, 5000);
+                }
             }
 
             // Feedback speichern
@@ -527,6 +590,34 @@
                 event.preventDefault();
                 // Handle file upload logic here
                 document.getElementById('speech-text').textContent = "Abgabe abgeschlossen. Warte auf die Korrektur :>";
+            }
+
+            function startCountdown(dueDate) {
+                const countdownElement = document.getElementById('countdown');
+
+                function updateCountdown() {
+                    const now = new Date();
+                    const targetDate = new Date(dueDate);
+
+                    const timeDiff = targetDate - now;
+
+                    if (timeDiff <= 0) {
+                        countdownElement.textContent = "Abgabefrist ist abgelaufen!";
+                        clearInterval(interval);
+                        return;
+                    }
+
+                    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                    countdownElement.textContent = `${days} Tage, ${hours} Stunden, ${minutes} Minuten, ${seconds} Sekunden`;
+                }
+
+                const interval = setInterval(updateCountdown, 1000);
+
+                updateCountdown();
             }
         </script>
     </body>

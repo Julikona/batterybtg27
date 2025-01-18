@@ -38,8 +38,8 @@
             /*Buttons*/
             /*Hertunterladen Buttons*/
             .download-btn {
-                margin-left: 10px;
-                padding: 10px 20px;
+                margin: 5px;
+                padding: 8px 12px;
                 background-color: #007bff;
                 color: white;
                 border: none;
@@ -52,8 +52,8 @@
 
             /*Löschen Buttons*/
             .delete-btn {
-                margin-left: 10px;
-                padding: 10px 20px;
+                padding: 8px 12px;
+                margin: 5px;
                 background-color: hsl(4, 90%, 58%);
                 color: white;
                 border: none;
@@ -64,11 +64,11 @@
                 background-color: hsl(4, 90%, 43%);
             }
 
-            /* Save Button */
+            /* Feedback Button */
             .save-btn {
                 background-color: #28a745;
                 color: white;
-                padding: 10px 20px;
+                padding: 8px 20px;
                 border: none;
                 cursor: pointer;
                 border-radius: 5px;
@@ -85,7 +85,7 @@
                 background-color: #f9f9f9;
                 border: 1px solid #ddd;
                 border-radius: 5px;
-                max-width: calc(100% - 350px); /* Maximal die Breite bis zum Mascot-Bild */
+                max-width: calc(100% - 0px); /* Maximal die Breite bis zum Mascot-Bild */
             }
 
             .field h2, .field-documents h2 {
@@ -113,7 +113,9 @@
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 10px;
-                border: 1px solid #ddd;
+                padding-left: 10px;
+                border-radius: 3px;
+                background-color: #e2e2e2;
             }
             .document-item a {
                 text-decoration: none;
@@ -124,15 +126,20 @@
 
             /*Abgaben*/
             .drag-drop-area {
+                position: relative;
                 width: 100%;
                 height: 150px;
                 border: 2px dashed #007bff;
                 text-align: center;
-                line-height: 150px;
+                line-height: 1.5;
                 color: #007bff;
                 background-color: #f9f9f9;
                 border-radius: 5px;
                 margin-bottom: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
             }
 
             /*Feedback*/
@@ -189,17 +196,46 @@
                 margin-right: -5px;
                 margin-top: -10px;
             }
+
+            #file-input {
+                display: none;
+            }
+
+            .upload-label{
+                display: inline-block;
+                padding: 5px 10px;
+                background-color: #007bff;
+                color: white;
+                border-radius: 5px;
+                cursor: pointer;
+                text-align: center;
+            }
+
+            .upload-label:hover{
+                background-color: #0056b3;
+            }
+
+            .delete-message {
+                color: red;
+                font-size: 20px;
+                margin-top: 10px;
+            }
         </style>
     </head>
     <body>
         <!-- Header -->
         <header>
             <div style="display: flex; align-items: center;">
+                <!-- Logo -->
                 <a href="#" onclick="redirectToMainPage()">
                     <img src="textures/logo-header.png" alt="Logo">
                 </a>
-                <h1 id="path">Main</h1>
+
+                <!-- Title -->
+                <h1>Main</h1>
             </div>
+
+            <!-- Logout -->
             <div class="button-group">
                 <button class="logout-button" onclick="logout()">Logout</button>
             </div>
@@ -247,6 +283,10 @@
                 <h2>Korrektur</h2>
                 <div id="drag-drop-area" class="drag-drop-area">
                     <p>Ziehe hier deine Dateien zum Hochladen</p>
+                    <div>
+                        <label for="file-input" class="upload-label">oder Datei auswählen</label>
+                        <input id="file-input" type="file" multiple>
+                    </div>
                 </div>
                 <div id="submissions-list">
                     <!-- Hochgeladene Dateien werden hier angezeigt -->
@@ -446,8 +486,6 @@
                     document.getElementById('pageTitle').textContent = subjectName.replaceAll("_", " ") + ' - ' + assignmentName.replaceAll("_", " ") + ' - ' + studentName;
                 }
 
-                document.getElementById('path').textContent += ' ->' + subjectName.replaceAll("_", " ") + ' ->' + assignmentName.replaceAll("_", " ") + ' ->' + studentName;
-
                 document.getElementById('student-list').textContent = subjectName.replaceAll("_", " ") + '\n' + assignmentName.replaceAll("_", " ");
 
                 if (userdata.role === "tutor") {
@@ -585,6 +623,12 @@
                 }
             }
 
+            const fileInput = document.getElementById('file-input');
+            fileInput.addEventListener('change', (e) => {
+                const files = e.target.files;
+                uploadFiles(files);
+            });
+
             function uploadFiles(files) {
                 const submissionList = document.getElementById('submissions-list');
                 const subjectName = getUrlParameter('subject');
@@ -613,7 +657,19 @@
 
             function deleteFile(button) {
                 const fileElement = button.parentElement.parentElement;
-                fileElement.remove();
+                const fileName = fileElement.querySelector('span').textContent;
+                if(confirm(`Möchtest du die Datei ${fileName} wirklich löschen?`)) {
+                    fileElement.remove();
+
+                    const message = document.createElement('p');
+                    message.classList.add('delete-message');
+                    message.textContent = `Die Datei ${fileName} wurde gelöscht`;
+                    document.getElementById('submissions-list').appendChild(message);
+
+                    setTimeout(() => {
+                        message.remove();
+                    }, 5000);
+                }
             }
 
             // Punktzahl speichern

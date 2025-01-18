@@ -9,89 +9,71 @@
         <title>Main</title>
 
         <!-- CSS -->
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/mascot.css">
+        <link rel="stylesheet" href="css/footer.css">
+        <link rel="stylesheet" href="css/header.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/body.css">
         <style>
-            main {
-                flex: 1;
-                display: flex;
-                justify-content: flex-start;
-                align-items: flex-start;
-                padding: 20px;
-                gap: 20px;
-            }
-            .mascot-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 300px;
-                height: 400px;
-                padding: 20px;
-            }
-            .mascot-container img {
-                max-width: 100%;
-                height: auto;
-            }
             .fach-container {
-                width: 1400px;
-                min-height: 600px;
                 height: auto;
-                border: 1px solid #ccc;
                 padding: 20px;
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
                 overflow-y: auto;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+                border-radius: 5px;
             }
+
             .fach {
                 position: relative;
-                width: 100%;
                 display: block;
             }
+
+            /* Styling der Buttons und Aufgaben wie in der Sidebar */
             .fach-content {
-                display: none;
+                display: block;
                 position: relative;
-                top: 100%;
-                left: 0;
-                background-color: #e7e7ec;
-                min-width: 160px;
-                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-                border-radius: 5px;
+                background-color: #e7e7ec; /* Gleicher Hintergrund wie die Sidebar */
+                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Leichter Schatten */
+                border-radius: 5px; /* Abgerundete Ecken */
                 padding: 10px;
                 margin-top: 10px;
-                z-index: 1;
             }
+
             .fach-content a {
                 color: black;
                 padding: 12px 16px;
                 text-decoration: none;
                 display: block;
-                border-bottom: 1px solid #ddd;
+                border-bottom: 1px solid #ddd; /* Trennlinien zwischen den Links */
             }
+
             .fach-content a:hover {
-                background-color: #ddd;
+                background-color: #ddd; /* Hover-Effekt wie in der Sidebar */
             }
-            .show {
-                display: block;
-            }
+
             .full-width-button {
                 width: 100%;
                 text-align: left;
                 padding-left: 10px;
-                background: #4CAF50;
-                color: white;
+                background: #4CAF50; /* Hintergrundfarbe des Buttons */
+                color: white; /* Textfarbe des Buttons */
                 border: none;
                 padding: 10px;
-                border-radius: 5px;
+                border-radius: 5px; /* Abgerundete Ecken */
                 cursor: pointer;
                 font-size: 16px;
             }
 
             .full-width-button:hover {
-                background: #45a049;
+                background: #45a049; /* Hover-Effekt für den Button */
             }
 
             .fach-content a:last-child {
-                border-bottom: none;
+                border-bottom: none; /* Entfernt die untere Trennlinie des letzten Links */
             }
 
             .speech-bubble {
@@ -142,23 +124,7 @@
         <main>
             <!-- Fächer Dropdowns -->
             <div class="fach-container">
-                <!-- Fach 1 -->
-                <div class="fach">
-                    <!-- Dropdown Button -->
-                    <button class="full-width-button" onclick="toggleDropdown('fach-content-1')">Programmieren 1</button>
-                    
-                    <!-- Dropdown Inhalt -->
-                    <div id="fach-content-1" class="fach-content"></div>
-                </div>
-
-                <!-- Fach 2 -->
-                <div class="fach">
-                    <!-- Dropdown Button -->
-                    <button class="full-width-button" onclick="toggleDropdown('fach-content-2')">Datenstrukturen und Algorithmen</button>
-                    
-                    <!-- Dropdown Inhalt -->
-                    <div id="fach-content-2" class="fach-content"></div>
-                </div>
+                <!-- Dynamische Fächer und Aufgaben werden hier hinzugefügt -->
             </div>
 
             <!-- Großes Maskottchen rechts -->
@@ -180,7 +146,7 @@
         <script src="js/loadLoginData.js"></script>
         <script>
             //Erstellt das Auswahlmenue
-            function loadData(id) {
+            document.addEventListener('DOMContentLoaded', () => {
                 // Die Daten für Fächer und Aufgaben
                 const data = {
                     "subjects": [
@@ -206,71 +172,70 @@
                     ]
                 };
 
-                //Feststellen des Fachs
-                var i = 0;
-                if (id != "fach-content-1") var i = 1;
-                const fach = document.getElementById(id);
-
-                //Löschen von zuvor erstellten Listen
-                while (fach.firstChild) {
-                    fach.removeChild(fach.firstChild);
+                function initializeText() {
+                    document.getElementById('speech-text').textContent = "Das sind deine Fächer. Klick sie an";
                 }
 
-                //Erstellt die Liste der Assignments
-                data.subjects[i].assignments.forEach(assignment => {
-                    const assignDiv = document.createElement('div');
-                    assignDiv.style.display = 'flex';
-                    assignDiv.style.alignItems = 'center';
-                    assignDiv.style.justifyContent = 'space-between'; // Align items to the right
+                // Funktion, um die Fächer und Aufgaben in die HTML-Struktur zu laden
+                function loadSubjects() {
+                    const fachContainer = document.querySelector('.fach-container'); // Fach-Container auswählen
+                    const userSubjects = sessionStorage.getItem("subjects");
 
-                    const assign = document.createElement('a');
-                    assign.href = 'assignment-tutor.html?subject=' + data.subjects[i].name + '&assignment=' + assignment.name;
-                    assign.textContent = assignment.name.replaceAll('_', ' '); // Change this text if needed
-                    assign.style.flexGrow = '1'; // Extend the link to fill available width
-
-                    const assignImage = document.createElement('img');
-                    assignImage.src = assignment.image;
-                    assignImage.alt = 'Assignment Bild';
-                    assignImage.style.marginLeft = '10px';
-                    assignImage.style.width = '50px'; // Adjust the size as needed
-                    assignImage.style.height = '50px'; // Adjust the size as needed
-
-                    assignDiv.appendChild(assign);
-                    assignDiv.appendChild(assignImage);
-                    fach.appendChild(assignDiv);
-                });
-            }
-
-            function initializeText() {
-                document.getElementById('speech-text').textContent = "Das sind deine Fächer. Klick sie an";
-            }
-
-            // Funktion zum Umschalten der Sichtbarkeit eines Dropdown-Menüs
-            function toggleDropdown(id) {
-                //Erstellt den Inhalt
-                loadData(id);
-                // Holen des Dropdown-Elements anhand der übergebenen ID
-                document.getElementById(id).classList.toggle("show");
-                // Mit classList.toggle wird die Klasse "show" hinzugefügt oder entfernt, je nachdem, ob sie bereits vorhanden ist, wodurch das Dropdown sichtbar oder unsichtbar gemacht wird
-            }
-
-            // Funktion, die bei einem Klick auf das Fenster aufgerufen wird
-            window.onclick = function(event) {
-                // Überprüfen, ob der Klick nicht auf ein Button-Element im Dropdown erfolgt ist
-                if (!event.target.matches('.fach button')) {
-                    // Holen aller Dropdown-Menüs auf der Seite
-                    var dropdowns = document.getElementsByClassName("fach-content");
-                    // Schleife durch alle Dropdown-Menüs
-                    for (var i = 0; i < dropdowns.length; i++) {
-                        var openDropdown = dropdowns[i];
-                        // Überprüfen, ob das Dropdown sichtbar ist (die Klasse "show" enthält)
-                        if (openDropdown.classList.contains('show')) {
-                            // Entfernen der "show"-Klasse, um das Dropdown unsichtbar zu machen
-                            openDropdown.classList.remove('show');
+                    data.subjects.forEach((subject) => {
+                        // Zeige nur die Fächer an, die ein Student auch wirklich hat
+                        if (!userSubjects.includes(subject.name)) {
+                            return;
                         }
-                    }
+
+                        // Erstelle den Fach-Div
+                        const fachDiv = document.createElement('div');
+                        fachDiv.classList.add('fach');
+                        
+                        // Button für das Fach
+                        const fachButton = document.createElement('button');
+                        fachButton.classList.add('full-width-button');
+                        fachButton.textContent = subject.name.replaceAll('_', ' ');
+                        
+                        // Erstelle die Fach-Inhalte
+                        const fachContentDiv = document.createElement('div');
+                        fachContentDiv.classList.add('fach-content');
+                        
+                        // Füge die Assignments hinzu
+                        subject.assignments.forEach(assignment => {
+                            const assignmentDiv = document.createElement('div');
+                            assignmentDiv.style.display = 'flex';
+                            assignmentDiv.style.alignItems = 'center';
+                            assignmentDiv.style.justifyContent = 'space-between'; // Align items to the right
+
+                            const assignmentLink = document.createElement('a');
+                            assignmentLink.href = 'assignment-tutor.html?subject=' + subject.name + '&assignment=' + assignment.name;
+                            assignmentLink.textContent = assignment.name.replaceAll('_', ' ');
+                            assignmentLink.style.flexGrow = '1'; // Extend the link to fill available width
+
+                            const assignmentImage = document.createElement('img');
+                            assignmentImage.src = assignment.image;
+                            assignmentImage.alt = 'Assignment Bild';
+                            assignmentImage.style.marginLeft = '10px';
+                            assignmentImage.style.width = '50px'; // Adjust the size as needed
+                            assignmentImage.style.height = '50px'; // Adjust the size as needed
+
+                            assignmentDiv.appendChild(assignmentLink);
+                            assignmentDiv.appendChild(assignmentImage);
+                            fachContentDiv.appendChild(assignmentDiv);
+                        });
+                        
+                        // Füge den Button und den Inhalt zum Fach-Div hinzu
+                        fachDiv.appendChild(fachButton);
+                        fachDiv.appendChild(fachContentDiv);
+                        
+                        // Füge das Fach-Div zum Fach-Container hinzu
+                        fachContainer.appendChild(fachDiv);
+                    });
                 }
-            }
+
+                // Initialisiere die Fächer beim Laden der Seite
+                loadSubjects();
+            });
         </script>
     </body>
 </html>
