@@ -96,7 +96,7 @@
 
             .speech-bubble {
                 position: fixed;
-                top: 200px;
+                top: 110px;
                 right: 20px;
                 width: 200px;
                 padding: 10px;
@@ -133,11 +133,11 @@
                 </a>
 
                 <!-- Titel/Navigation -->
-                <h1>Main</h1> <!-- Change this text -->
+                <h1>Main</h1>
             </div>
 
             <!-- Logout Button -->
-            <button class="logout-button" onclick="logout()">Logout</button> <!-- Change this text -->
+            <button class="logout-button" onclick="logout()">Logout</button>
         </header>
         <main>
             <!-- Fächer Dropdowns -->
@@ -145,7 +145,7 @@
                 <!-- Fach 1 -->
                 <div class="fach">
                     <!-- Dropdown Button -->
-                    <button class="full-width-button" onclick="toggleDropdown('fach-content-1')">Programmieren 1</button> <!-- Change this text -->
+                    <button class="full-width-button" onclick="toggleDropdown('fach-content-1')">Programmieren 1</button>
                     
                     <!-- Dropdown Inhalt -->
                     <div id="fach-content-1" class="fach-content"></div>
@@ -154,7 +154,7 @@
                 <!-- Fach 2 -->
                 <div class="fach">
                     <!-- Dropdown Button -->
-                    <button class="full-width-button" onclick="toggleDropdown('fach-content-2')">Datenstrukturen und Algorithmen</button> <!-- Change this text -->
+                    <button class="full-width-button" onclick="toggleDropdown('fach-content-2')">Datenstrukturen und Algorithmen</button>
                     
                     <!-- Dropdown Inhalt -->
                     <div id="fach-content-2" class="fach-content"></div>
@@ -163,15 +163,15 @@
 
             <!-- Großes Maskottchen rechts -->
             <div class="mascot-container">
-                <img src="textures/battery1.png" alt="Mascot"> <!-- Change the image source if needed -->
+                <img src="textures/battery1.png" alt="Mascot">
             </div>
             <div class="speech-bubble" id="speech-bubble">
-                <p id="speech-text">Das sind deine Fächer. Klick sie an</p> <!-- Change this text -->
+                <p id="speech-text">Das sind deine Fächer. Klick sie an</p>
             </div>
         </main>
         <footer>
             <!-- Text im Footer -->
-            <p id="userInfo">Sie sind angemeldet als <span id="username"></span> (<span id="role"></span>)</p> <!-- Change this text -->
+            <p id="userInfo">Sie sind angemeldet als <span id="username"></span> (<span id="role"></span>)</p>
         </footer>
 
         <!-- Scripts -->
@@ -187,20 +187,20 @@
                         {
                             "name": "Programmieren_I", 
                             "assignments": [
-                                {"name": "Assignment_01"},
-                                {"name": "Assignment_02"},
-                                {"name": "Assignment_03"},
-                                {"name": "Assignment_04"},
-                                {"name": "Assignment_05"},
-                                {"name": "Assignment_06"}
+                                {"name": "Assignment_01", "image": "textures/lädt.png"},
+                                {"name": "Assignment_02", "image": "textures/voll.png"},
+                                {"name": "Assignment_03", "image": "textures/voll.png"},
+                                {"name": "Assignment_04", "image": "textures/muss_laden.png"},
+                                {"name": "Assignment_05", "image": "textures/lehr.png"},
+                                {"name": "Assignment_06", "image": "textures/lehr.png"}
                             ]
                         },
                         {
                             "name": "Datenstrukturen_und_Algorithmen", 
                             "assignments": [
-                                {"name": "Assignment_01"},
-                                {"name": "Assignment_02"},
-                                {"name": "Assignment_03"}
+                                {"name": "Assignment_01", "image": "textures/voll.png"},
+                                {"name": "Assignment_02", "image": "textures/voll.png"},
+                                {"name": "Assignment_03", "image": "textures/lehr.png"}
                             ]
                         }
                     ]
@@ -218,15 +218,31 @@
 
                 //Erstellt die Liste der Assignments
                 data.subjects[i].assignments.forEach(assignment => {
+                    const assignDiv = document.createElement('div');
+                    assignDiv.style.display = 'flex';
+                    assignDiv.style.alignItems = 'center';
+                    assignDiv.style.justifyContent = 'space-between'; // Align items to the right
+
                     const assign = document.createElement('a');
-                    assign.href =  'assignment-tutor.html?subject=' + data.subjects[i].name + '&assignment=' + assignment.name;
+                    assign.href = 'assignment-tutor.html?subject=' + data.subjects[i].name + '&assignment=' + assignment.name;
                     assign.textContent = assignment.name.replaceAll('_', ' '); // Change this text if needed
-                    fach.appendChild(assign);
-                })
+                    assign.style.flexGrow = '1'; // Extend the link to fill available width
+
+                    const assignImage = document.createElement('img');
+                    assignImage.src = assignment.image;
+                    assignImage.alt = 'Assignment Bild';
+                    assignImage.style.marginLeft = '10px';
+                    assignImage.style.width = '50px'; // Adjust the size as needed
+                    assignImage.style.height = '50px'; // Adjust the size as needed
+
+                    assignDiv.appendChild(assign);
+                    assignDiv.appendChild(assignImage);
+                    fach.appendChild(assignDiv);
+                });
             }
 
             function initializeText() {
-                document.getElementById('speech-text').textContent = "Das sind deine Fächer. Klick sie an"; // Change this text
+                document.getElementById('speech-text').textContent = "Das sind deine Fächer. Klick sie an";
             }
 
             // Funktion zum Umschalten der Sichtbarkeit eines Dropdown-Menüs
