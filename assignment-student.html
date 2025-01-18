@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <!DOCTYPE html>
 <html lang="de">
     <head>
@@ -503,3 +504,538 @@
         </script>
     </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <!-- Meta -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Titel -->
+        <title>Main</title>
+
+        <!-- Skript Bibliotheken -->
+        <!-- Packen von ZIP-Dateien -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <!-- Icons für Download-Button -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="css/sidebar.css">
+        <link rel="stylesheet" href="css/mascot.css">
+        <link rel="stylesheet" href="css/footer.css">
+        <link rel="stylesheet" href="css/header.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/body.css">
+        <style>
+            /* Allgemein */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            footer {
+                width: calc(100% - 250px); /* Breite der Sidebar abziehen */
+                left: 250px; /* Footer beginnt nach der Sidebar */
+            }
+
+            /*Buttons*/
+            /*Hertunterladen Buttons*/
+            .download-btn {
+                margin-left: 10px;
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+            .download-btn:hover {
+                background-color: #0056b3;
+            }
+
+            /*Löschen Buttons*/
+            .delete-btn {
+                margin-left: 10px;
+                padding: 10px 20px;
+                background-color: hsl(4, 90%, 58%);
+                color: white;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+            .delete-btn:hover {
+                background-color: hsl(4, 90%, 43%);
+            }
+
+            /* Feedback Button */
+            .save-btn {
+                background-color: #28a745;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+            .save-btn:hover {
+                background-color: #218838;
+            }
+
+            /* Allgemeine Stile für die Felder */
+            .field {
+                margin-top: 20px;
+                padding: 20px;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                max-width: calc(100% - 350px); /* Maximal die Breite bis zum Mascot-Bild */
+            }
+
+            .field h2 {
+                margin-bottom: 10px;
+            }
+
+            /* Auflistungen der Dateien */
+            /* Liste */
+            #documents-list ul, #submissions-list ul {
+                list-style-type: none;
+                padding-left: 0;
+            }
+            #documents-list li, #submissions-list li {
+                margin-bottom: 10px;
+            }
+            #documents-list a, #submissions-list a {
+                text-decoration: none;
+                color: #007bff;
+            }
+            
+            /* Listenelemente */
+            .document-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+            }
+            .document-item a {
+                text-decoration: none;
+                color: #007bff;
+                flex-grow: 1;
+            }
+
+            /*Abgaben*/
+            .drag-drop-area {
+                width: 100%;
+                height: 150px;
+                border: 2px dashed #007bff;
+                text-align: center;
+                line-height: 150px;
+                color: #007bff;
+                background-color: #f9f9f9;
+                border-radius: 5px;
+                margin-bottom: 20px;
+            }
+
+            /*Feedback*/
+            textarea {
+                width: 100%;
+                height: 150px;
+                margin-bottom: 10px;
+                padding: 10px;
+                font-size: 1rem;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+
+            .speech-bubble {
+                position: fixed;
+                top: 150px;
+                right: 20px;
+                width: 300px;
+                padding: 10px;
+                background: #f1f1f1;
+                border: 2px solid #000;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .speech-bubble:after {
+                content: '';
+                position: absolute;
+                top: 100%;
+                right: 20px;
+                width: 0;
+                height: 0;
+                border: 10px solid transparent;
+                border-bottom-color: #f1f1f1;
+                border-top: 0;
+                border-right: 0;
+                margin-right: -5px;
+                margin-top: -10px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <header>
+            <div style="display: flex; align-items: center;">
+                <a href="#" onclick="redirectToMainPage()">
+                    <img src="textures/logo-header.png" alt="Logo">
+                </a>
+                <h1>Main</h1>
+            </div>
+            <div class="button-group">
+                <button class="logout-button" onclick="logout()">Logout</button>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <a href="#" onclick="redirectToMainPage()">
+                <h2>Fächer</h2>
+            </a>
+            <div id="fachList"></div>
+        </div>
+
+        <!-- Main Inhalt -->
+        <main>
+            <h1 id="pageTitle"></h1>
+            <div class="mascot-container">
+                <img id="mascot-image" src="textures/battery2.png" alt="Mascot">
+                <input type="file" id="file-input" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;" onchange="handleFileSelect(event)">
+            </div>
+
+            <!-- Unterlagen Feld -->
+            <div class="field">
+                <h2>Unterlagen</h2>
+                <div id="documents-list">
+                    <ul>
+                        <li><a href="Weihnachtsbaum.pdf" target="_blank">Document 1</a></li>
+                        <li><a href="#" download="document2.pdf">Document 2</a></li>
+                    </ul>
+                    <button class="download-btn" id="downloadAll">Alle herunterladen</button>
+                </div>
+            </div>
+
+            <!-- Abgaben Feld -->
+            <div class="field">
+                <h2>Abgaben</h2>
+                <div id="drag-drop-area" class="drag-drop-area">
+                    <p>Ziehe hier deine Dateien zum Hochladen</p>
+                </div>
+                <div id="submissions-list">
+                    <!-- Hochgeladene Dateien werden hier angezeigt -->
+                </div>
+            </div>
+
+            <!-- Korrektur Feld -->
+            <div class="field">
+                <h2>Korrektur</h2>
+                <div id="correction-container">
+                    <!-- Hier wird die Korrektur oder die Nachricht "Keine Korrektur vorhanden" angezeigt -->
+                </div>
+            </div>
+
+            <!-- Feedback Feld -->
+            <div class="field">
+                <h2>Feedback</h2>
+                <textarea id="feedback-text" placeholder="Gib hier dein Feedback ein..."></textarea>
+                <button class="save-btn" onclick="saveFeedback()">Speichern</button>
+            </div>
+
+            <div class="speech-bubble" id="speech-bubble">
+                <p id="speech-text">Du kannst jetzt deine Dateien in das Feld drag&dropen oder kannst mich ankliken um eine gewählte Datei abzugeben</p>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p id="userInfo">Sie sind angemeldet als <span id="username"></span> (<span id="role"></span>)</p>
+        </footer>
+
+        <!-- Scripts -->
+        <script src="js/logout.js"></script>
+        <script src="js/redirectToMainPage.js"></script>
+        <script src="js/loadLoginData.js"></script>
+        <script src="js/loadSidebar.js"></script>
+        <script>
+            // Die Daten für Fächer und Aufgabendata.subjects.subjectName.assignmentName.users.
+            const data = {
+                "subjects": [
+                    {
+                        "name": "Programmieren_I", 
+                        "assignments": [
+                            {"name": "Assignment_01", "link":"./documents/Programmieren_I/Assignment_1/", 
+                            "documents-student":[
+                                "Aufgabenstellung.txt", 
+                                "Korrekturhinweise.txt"
+                            ], "documents-tutor":[
+                                "Aufgabenstellung.txt", 
+                                "Korrekturhinweise.txt", 
+                                "Musterloesung.txt"
+                            ], "users":[
+                                {"username":"till", "submissions":[
+                                    "Antworten.txt",
+                                    "Weihnachtsbaum.jpg",
+                                    "Weihnachtsbaum.pdf"
+                                ], "correction":"Korrektur.txt", "points":"", "feedback":""}
+                            ]},
+                            {"name": "Assignment_02"},
+                            {"name": "Assignment_03"},
+                            {"name": "Assignment_04"},
+                            {"name": "Assignment_06"},
+                            {"name": "Assignment_05"}
+                        ]
+                    },
+                    {
+                        "name": "Datenstrukturen_und_Algorithmen", 
+                        "assignments": [
+                            {"name": "Assignment_01"},
+                            {"name": "Assignment_02"},
+                            {"name": "Assignment_03"}
+                        ]
+                    }
+                ]
+            };
+            let userdata = 0;
+
+            // Funktion zum Extrahieren von URL-Parametern
+            function getUrlParameter(name) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(name);
+            }
+
+            function displayAssignmentDetails(subjectName, assignmentName, assignments) {
+                // Dokumente der Studenten anzeigen
+                const documentsList = document.getElementById('documents-list');
+                documentsList.innerHTML = ''; // Clear previous list
+
+                // Dokumente laden
+                assignments['documents-student'].forEach(doc => {
+                    const fileElement = document.createElement('li');
+                    fileElement.classList.add('document-item');
+                    fileElement.innerHTML = `
+                        <a href="./documents/${subjectName}/${assignmentName}/${doc}" target="_blank"><span>${doc}</span></a>
+                        <div class="button-group">
+                            <a href="${URL.createObjectURL(new Blob([doc]))}" download="${doc}"><button class="download-btn"><i class="fa fa-download" style="font-size:18px"></i></button></a>
+                        </div>
+                    `;
+                    documentsList.appendChild(fileElement);
+                });
+
+                // Erstelle ein Array mit allen Files zum herunterladen
+                const files = assignments['documents-student'].map(doc => ({
+                    name: doc,
+                    path: `./documents/${subjectName}/${assignmentName}/${doc}`
+                }));
+
+                // Alle herunterladen Button hinzufügen
+                const downloadButton = document.createElement('button');
+                downloadButton.classList.add('download-btn');
+                downloadButton.textContent = 'Alle herunterladen';
+                downloadButton.onclick = () => {downloadAllFiles(files)};
+                documentsList.appendChild(downloadButton); // Button hinzufügen
+
+                // Abgaben des aktuellen Benutzers anzeigen
+                const username = sessionStorage.getItem("username");
+                const submissionsList = document.getElementById('submissions-list');
+                
+                submissionsList.innerHTML = ''; // Clear previous submissions
+                
+                if (userdata) {
+                    userdata.submissions.forEach(file => {
+                        const fileElement = document.createElement('div');
+                        fileElement.classList.add('submission');
+                        fileElement.innerHTML = `
+                            <li class="document-item">
+                                <a href="./documents/${subjectName}/${assignmentName}/${userdata.username}/${file}" target="_blank"><span>${file}</span></a>
+                                <div class="button-group">
+                                    <a href="${URL.createObjectURL(new Blob([file]))}" download="${file}"><button class="download-btn"><i class="fa fa-download" style="font-size:18px"></i></button></a>
+                                    <button class="delete-btn" onclick="deleteFile(this)"><i class="fa fa-trash-o" style="font-size:18px"></i></button>
+                                </div>
+                            </li>
+                        `;
+                        submissionsList.appendChild(fileElement);
+                    });
+                }
+
+                // Korrektur anzeigen
+                const correctionLink = document.getElementById('correction-link');
+                const correctionContainer = document.getElementById('correction-container');
+                if (userdata && userdata.correction) {
+                    const correctionFileName = userdata.correction;
+
+                    // Den Link zur Korrektur anzeigen
+                    correctionContainer.innerHTML = `
+                        <li class="document-item">
+                            <a href="./documents/${subjectName}/${assignmentName}/${username}/${correctionFileName}" target="_blank"><span>${correctionFileName}</span></a>
+                            <div class="button-group">
+                                <a href="${URL.createObjectURL(new Blob([userdata.correction]))}" download="${userdata.correction}"><button class="download-btn"><i class="fa fa-download" style="font-size:18px"></i></button></a>
+                            </div>
+                        </li>
+                    `;
+                } else {
+                    // Wenn keine Korrektur vorhanden ist
+                    correctionContainer.innerHTML = `<p>Keine Korrektur vorhanden.</p>`;
+                }
+
+                // Feedback anzeigen
+                const feedbackText = document.getElementById('feedback-text');
+                if (userdata && userdata.feedback) {
+                    feedbackText.value = userdata.feedback;
+                } else {
+                    feedbackText.value = ""; // Leere das Textfeld, wenn kein Feedback vorhanden ist
+                }
+            }
+
+            function downloadAllFiles(files) {
+                // Funktion zum Herunterladen aller Dokumente implementieren
+                const zip = new JSZip();
+
+                // Füge die Dateien zum ZIP hinzu
+                files.forEach(file => {
+                    zip.file(file.name, file.content); // Dateiname und Inhalt hinzufügen
+                });
+
+                // Generiere die ZIP-Datei
+                zip.generateAsync({ type: "blob" }).then(function(content) {
+                    // Erstelle ein Download-Link mit Blob-URL
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(content);
+                    link.download = "alle_dateien.zip"; // Name der heruntergeladenen ZIP-Datei
+                    link.click(); // Simuliere den Klick auf den Link, um den Download zu starten
+                });
+            }
+
+            // Funktion zum Umschalten der Dropdown-Ansicht für Aufgaben
+            function toggleDropdown(id) {
+                const content = document.getElementById(id);
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            }
+
+            // Wenn die Seite geladen ist, die Fächer und Aufgaben laden und die URL-Parameter lesen
+            document.addEventListener('DOMContentLoaded', () => {
+                // Fach und Assignment aus Url lesen
+                const subjectName = getUrlParameter('subject');
+                const assignmentName = getUrlParameter('assignment');
+                const userName = sessionStorage.getItem("username");
+
+                // Fach in data suchen
+                const subject = data.subjects.find(sub => sub.name === subjectName);
+                if (!subject) {
+                    console.error(`Fach ${subjectName} nicht gefunden`);
+                    return;
+                }
+
+                // Aufgabe in data suchen
+                const assignments = subject.assignments.find(assign => assign.name === assignmentName);
+                if (!assignments) {
+                    console.error(`Aufgabe ${assignmentName} nicht gefunden`);
+                    return;
+                }
+
+                // Benutzer in data suchen
+                userdata = assignments.users.find(usr => usr.username === userName);
+                if (!userdata) {
+                    console.error(`Benutzerdaten nicht gefunden`);
+                    return;
+                }
+
+                // Den Titel im Main-Bereich setzen
+                if (subjectName && assignmentName) {
+                    const pageTitle = subjectName.replaceAll("_", " ") + ' - ' + assignmentName.replaceAll("_", " ");
+                    document.getElementById('pageTitle').textContent = pageTitle;
+                }
+
+                // Lade die Fächer und Aufgaben
+                loadSidebar();
+
+                displayAssignmentDetails(subjectName, assignmentName, assignments);
+            });
+
+            // Drag & Drop für das Hochladen von Dateien
+            const dropArea = document.getElementById('drag-drop-area');
+            dropArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropArea.style.backgroundColor = '#f0f0f0'; // Bei Drag über der Fläche
+            });
+
+            dropArea.addEventListener('dragleave', () => {
+                dropArea.style.backgroundColor = ''; // Wenn die Datei den Bereich verlässt
+            });
+
+            dropArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropArea.style.backgroundColor = ''; // Rückgängig machen der Hintergrundfarbe
+                const files = e.dataTransfer.files;
+                console.log(files);
+                uploadFiles(files);
+                document.getElementById('speech-text').textContent = "Abgabe abgeschlossen. Warte auf die Korrektur :>";
+            });
+
+            function handleFileSelect(event) {
+                const files = event.target.files;
+                if (files.length > 0) {
+                    uploadFiles(files);
+                    document.getElementById('speech-text').textContent = "Abgabe abgeschlossen. Warte auf die Korrektur :>";
+                }
+            }
+
+            function uploadFiles(files) {
+                const submissionList = document.getElementById('submissions-list');
+                const subjectName = getUrlParameter('subject');
+                const assignmentName = getUrlParameter('assignment');
+                const username = sessionStorage.getItem("username");
+
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const fileElement = document.createElement('div');
+                    fileElement.classList.add('submission');
+                    fileElement.innerHTML = `
+                        <li class="document-item">
+                            <a href="./documents/${subjectName}/${assignmentName}/${username}/${file.name}" target="_blank"><span>${file.name}</span></a>
+                            <div class="button-group">
+                                <a href="${URL.createObjectURL(new Blob([file]))}" download="${file.name}"><button class="download-btn"><i class="fa fa-download" style="font-size:18px"></i></button></a>
+                                <button class="delete-btn" onclick="deleteFile(this)"><i class="fa fa-trash-o" style="font-size:18px"></i></button>
+                            </div>
+                        </li>
+                    `;
+                    submissionList.appendChild(fileElement);
+                }
+
+                // Change mascot image to battery1.png after submission
+                document.getElementById('mascot-image').src = 'textures/battery1.png';
+            }
+
+            function deleteFile(button) {
+                const fileElement = button.parentElement.parentElement;
+                fileElement.remove();
+            }
+
+            // Feedback speichern
+            function saveFeedback() {
+                const feedback = document.getElementById('feedback-text').value;
+                if (feedback) {
+                    alert('Feedback gespeichert: ' + feedback);
+                    userdata.feedback = feedback;
+                } else {
+                    alert('Bitte gib Feedback ein!');
+                }
+            }
+
+            function handleDragOver(event) {
+                event.preventDefault();
+            }
+
+            function handleDrop(event) {
+                event.preventDefault();
+                // Handle file upload logic here
+                document.getElementById('speech-text').textContent = "Abgabe abgeschlossen. Warte auf die Korrektur :>";
+            }
+        </script>
+    </body>
+</html>
+>>>>>>> Stashed changes
