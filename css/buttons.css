@@ -1,0 +1,41 @@
+/*Buttons*/
+/*Hertunterladen Buttons*/
+.download-btn {
+    margin: 5px;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.download-btn:hover {
+    background-color: #0056b3;
+}
+
+/*Löschen Buttons*/
+.delete-btn {
+    padding: 8px 12px;
+    margin: 5px;
+    background-color: hsl(4, 90%, 58%);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.delete-btn:hover {
+    background-color: hsl(4, 90%, 43%);
+}
+
+/* Feedback Button */
+.save-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.save-btn:hover {
+    background-color: #218838;
+}

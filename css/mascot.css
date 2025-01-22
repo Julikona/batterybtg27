@@ -1,5 +1,6 @@
 .mascot-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 300px;
@@ -15,3 +16,21 @@
     max-width: 100%; /* Bild wird auf die maximale Breite des Containers angepasst */
     height: auto; /* Höhe bleibt im Verhältnis zur Breite */
 }
+
+.speech-bubble {
+    right: 20px;
+    width: 100%;
+    padding: 10px;
+    background: #f1f1f1;
+    border: 2px solid #000;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+/* Lässt Maskottchen verschwinden */
+@media (max-width: 680px) {
+    .mascot-container {
+        display: none;
+    }
+} 

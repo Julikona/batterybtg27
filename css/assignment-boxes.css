@@ -1,0 +1,54 @@
+/* Allgemeiner Stile für die Felder/Boxen (Unterlagen, Abgaben, Korrektur, etc.) */
+.field, .field-documents {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid rgb(194, 194, 194);
+    border-radius: 5px;
+    min-width: 330px;
+    width: 100%;
+    max-width: 1200px; /* Maximal die Breite bis zum Mascot-Bild */
+    box-shadow: 2px 2px 5px rgba(126, 126, 126, 0.2);
+}
+
+.field h2, .field-documents h2 {
+    margin-bottom: 10px;
+}
+
+/* ändert breite der Boxen */
+@media (max-width: 940px) {
+    .field {
+        width: 100%;
+    }
+} 
+
+
+/* Auflistungen der Dateien */
+/* Liste */
+#documents-list ul, #submissions-list ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+#documents-list li, #submissions-list li {
+    margin-bottom: 10px;
+}
+#documents-list a, #submissions-list a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+/* Listenelemente */
+.document-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    border-radius: 3px;
+    border: 1px solid rgb(194, 194, 194);
+    background-color: #ecebeb;
+}
+.document-item a {
+    text-decoration: none;
+    color: #007bff;
+}

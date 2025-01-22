@@ -72,32 +72,12 @@
             background-color: #0056b3;
         }
 
-        .speech-bubble {
-            position: fixed;
-            top: 300px;
-            right: 20px;
-            width: 200px;
-            padding: 10px;
-            background: #f1f1f1;
-            border: 2px solid #000;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-
-        .speech-bubble:after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            right: 20px;
-            width: 0;
-            height: 0;
-            border: 0 solid transparent;
-            border-bottom: 10px #f1f1f1;
-            border-left-width: 10px;
-            margin-right: -5px;
-            margin-top: -10px;
-        }
+        /* lässt Mascot wegen Login-Feld eher verschwinden */
+        @media (max-width: 1020px) {
+            .mascot-container {
+                display: none;
+            }
+        } 
     </style>
 </head>
 <body onload="initializeText()">
@@ -136,10 +116,10 @@
         </div>
         <div>
             <div class="mascot-container">
+                <div class="speech-bubble" id="speech-bubble">
+                    <p id="speech-text">Gib deinen Namen und dein Passwort ein.</p>
+                </div>
                 <img src="textures/battery1.png" alt="Mascot">
-            </div>
-            <div class="speech-bubble" id="speech-bubble">
-                <p id="speech-text">Gib dein Name und Passwort ein</p>
             </div>
         </div>
     </main>
@@ -159,7 +139,7 @@
         }
 
         function initializeText() {
-            document.getElementById('speech-text').textContent = "Gib dein Name und Passwort ein";
+            document.getElementById('speech-text').textContent = "Gib deinen Namen und dein Passwort ein.";
         }
 
         function handleLogin() {

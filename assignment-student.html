@@ -23,6 +23,8 @@
         <link rel="stylesheet" href="css/header.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/body.css">
+        <link rel="stylesheet" href="css/buttons.css">
+        <link rel="stylesheet" href="css/assignment-boxes.css">
         <style>
             /* Allgemein */
             * {
@@ -36,93 +38,20 @@
                 left: 250px; /* Footer beginnt nach der Sidebar */
             }
 
-            /*Buttons*/
-            /*Hertunterladen Buttons*/
-            .download-btn {
-                margin: 5px;
-                padding: 8px 12px;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                border-radius: 3px;
-                cursor: pointer;
-            }
-            .download-btn:hover {
-                background-color: #0056b3;
-            }
-
-            /*Löschen Buttons*/
-            .delete-btn {
-                padding: 8px 12px;
-                margin: 5px;
-                background-color: hsl(4, 90%, 58%);
-                color: white;
-                border: none;
-                border-radius: 3px;
-                cursor: pointer;
-            }
-            .delete-btn:hover {
-                background-color: hsl(4, 90%, 43%);
-            }
-
-            /* Feedback Button */
-            .save-btn {
-                background-color: #28a745;
-                color: white;
-                padding: 8px 20px;
-                border: none;
-                cursor: pointer;
-                border-radius: 5px;
-            }
-            .save-btn:hover {
-                background-color: #218838;
+            /* Setzte Footer auf komplette Breite wenn Sidebar verschwindet */
+            @media (max-width: 940px) {
+                footer {
+                    width: 100%;
+                    left: 0;
+                }
             }
 
 
-            /* Allgemeiner Stile für die Felder */
-            .field {
-                margin-top: 20px;
-                padding: 20px;
-                background-color: #f9f9f9;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                max-width: calc(100% - 350px); /* Maximal die Breite bis zum Mascot-Bild */
+            #pageTitle, #countdown {
+                min-width: 330px;
             }
 
-            .field h2 {
-                margin-bottom: 10px;
-            }
-
-            /* Auflistungen der Dateien */
-            /* Liste */
-            #documents-list ul, #submissions-list ul {
-                list-style-type: none;
-                padding-left: 0;
-            }
-            #documents-list li, #submissions-list li {
-                margin-bottom: 10px;
-            }
-            #documents-list a, #submissions-list a {
-                text-decoration: none;
-                color: #007bff;
-            }
-            
-            /* Listenelemente */
-            .document-item {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 10px;
-                padding-left: 10px;
-                border-radius: 3px;
-                background-color: #e2e2e2;
-            }
-            .document-item a {
-                text-decoration: none;
-                color: #007bff;
-            }
-
-            /*Abgaben*/
+            /* Abgaben */
             .drag-drop-area {
                 position: relative;
                 width: 100%;
@@ -149,34 +78,6 @@
                 font-size: 1rem;
                 border: 1px solid #ddd;
                 border-radius: 5px;
-            }
-
-            .speech-bubble {
-                position: fixed;
-                top: 150px;
-                right: 20px;
-                width: 300px;
-                padding: 10px;
-                background: #f1f1f1;
-                border: 2px solid #000;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                z-index: 1000;
-            }
-
-            .speech-bubble:after {
-                content: '';
-                position: absolute;
-                top: 100%;
-                right: 20px;
-                width: 0;
-                height: 0;
-                border: 10px solid transparent;
-                border-bottom-color: #f1f1f1;
-                border-top: 0;
-                border-right: 0;
-                margin-right: -5px;
-                margin-top: -10px;
             }
 
             #file-input{
@@ -230,7 +131,12 @@
         <main>
             <h1 id="pageTitle"></h1>
             <div id="countdown"></div>
+
+            <!-- Maskottchen -->
             <div class="mascot-container">
+                <div class="speech-bubble" id="speech-bubble">
+                    <p id="speech-text">Du kannst jetzt deine Dateien in das Feld drag&dropen oder auf dem Button klicken und deine Datei auswählen.</Button></p>
+                </div>
                 <img id="mascot-image" src="textures/battery2.png" alt="Mascot">
                 <input type="file" id="file-input" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;" onchange="handleFileSelect(event)">
             </div>
@@ -275,10 +181,6 @@
                 <h2>Feedback</h2>
                 <textarea id="feedback-text" placeholder="Gib hier dein Feedback ein..."></textarea>
                 <button class="save-btn" onclick="saveFeedback()">Speichern</button>
-            </div>
-
-            <div class="speech-bubble" id="speech-bubble">
-                <p id="speech-text">Du kannst jetzt deine Dateien in das Feld drag&dropen oder auf dem Button klicken und deine Datei auswählen.</Button></p>
             </div>
         </main>
 
@@ -622,4 +524,3 @@
         </script>
     </body>
 </html>
->>>>>>> Stashed changes

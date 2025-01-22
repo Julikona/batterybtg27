@@ -8,3 +8,7 @@ footer {
     display: flex;
     justify-content: center; /* Zentriert den Text im Footer */
 }
+
+footer p {
+    min-width: 330px;
+}

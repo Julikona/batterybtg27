@@ -14,19 +14,8 @@
         <link rel="stylesheet" href="css/header.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/body.css">
+        <link rel="stylesheet" href="css/assignment-boxes.css">
         <style>
-            .fach-container {
-                height: auto;
-                padding: 20px;
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                overflow-y: auto;
-                background-color: #f9f9f9;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-            }
-
             .fach {
                 position: relative;
                 display: block;
@@ -37,10 +26,15 @@
                 display: block;
                 position: relative;
                 background-color: #e7e7ec; /* Gleicher Hintergrund wie die Sidebar */
-                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Leichter Schatten */
                 border-radius: 5px; /* Abgerundete Ecken */
                 padding: 10px;
                 margin-top: 10px;
+                margin-bottom: 20px;
+                box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            }
+
+            .fach button {
+                box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
             }
 
             .fach-content a {
@@ -75,34 +69,6 @@
             .fach-content a:last-child {
                 border-bottom: none; /* Entfernt die untere Trennlinie des letzten Links */
             }
-
-            .speech-bubble {
-                position: fixed;
-                top: 200px;
-                right: 20px;
-                width: 200px;
-                padding: 10px;
-                background: #f1f1f1;
-                border: 2px solid #000;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                z-index: 1000;
-            }
-
-            .speech-bubble:after {
-                content: '';
-                position: absolute;
-                top: 100%;
-                right: 20px;
-                width: 0;
-                height: 0;
-                border: 10px solid transparent;
-                border-bottom-color: #f1f1f1;
-                border-top: 0;
-                border-right: 0;
-                margin-right: -5px;
-                margin-top: -10px;
-            }
         </style>
     </head>
     <body onload="initializeText()">
@@ -126,16 +92,16 @@
         <!-- Main Teil der Seite -->
         <main>
             <!-- Fächer ohne Dropdowns -->
-            <div class="fach-container">
+            <div class="field">
                 <!-- Dynamische Fächer und Aufgaben werden hier hinzugefügt -->
             </div>
         
             <!-- Großes Maskottchen rechts -->
             <div class="mascot-container">
+                <div class="speech-bubble" id="speech-bubble">
+                    <p id="speech-text">Wähle das Assignment aus ,dass du bearbeiten willst :></p> <!-- Change this text -->
+                </div>
                 <img src="textures/battery1.png" alt="Mascot"> <!-- Change the image source if needed -->
-            </div>
-            <div class="speech-bubble" id="speech-bubble">
-                <p id="speech-text">Wähle das Assignment aus ,dass du bearbeiten willst :></p> <!-- Change this text -->
             </div>
         </main>
         
@@ -182,7 +148,7 @@
 
                 // Funktion, um die Fächer und Aufgaben in die HTML-Struktur zu laden
                 function loadSubjects() {
-                    const fachContainer = document.querySelector('.fach-container'); // Fach-Container auswählen
+                    const fachContainer = document.querySelector('.field'); // field auswählen
                     const userSubjects = sessionStorage.getItem("subjects");
 
                     data.subjects.forEach((subject) => {
@@ -232,7 +198,7 @@
                         fachDiv.appendChild(fachButton);
                         fachDiv.appendChild(fachContentDiv);
                         
-                        // Füge das Fach-Div zum Fach-Container hinzu
+                        // Füge das Fach-Div zum field hinzu
                         fachContainer.appendChild(fachDiv);
                     });
                 }

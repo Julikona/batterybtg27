@@ -7,3 +7,19 @@ main {
     overflow-y: auto;
     position: relative; /* Verhindert, dass der Main-Bereich hinter die Sidebar verschwindet */
 }
+
+/* Lässt Sidebar verschwinden */
+@media (max-width: 940px) {
+    main {
+        margin-left: 0px; /* Sidebar Platz */
+        margin-right: 300px; /* Abstand bis zum Mascot */
+    }
+}
+
+/* lässt Maskottchen verschwinden */
+@media (max-width: 680px) {
+    main {
+        margin-left: 0px; /* Sidebar Platz */
+        margin-right: 0px; /* Abstand bis zum Mascot */
+    }
+} 
