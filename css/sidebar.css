@@ -50,21 +50,26 @@
     background: #4CAF50;
     color: white;
     padding: 10px;
+    margin-bottom: 10px;
     border: none;
     width: 100%;
     text-align: left;
     cursor: pointer;
     border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .fach-content {
     display: none;
-    padding-left: 20px;
+    background-color: #d8d7d7;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .fach-content a {
     color: black;
     padding: 10px;
+    padding-left: 30px;
     display: block;
     text-decoration: none;
 }
