@@ -496,15 +496,29 @@
 
             function startCountdown(dueDate) {
                 const countdownElement = document.getElementById('countdown');
+                countdownElement.innerHTML = '';
+
+                const dueDateElement = document.createElement('p');
+                dueDateElement.textContent = `Abgabedatum: ${new Date(dueDate).toLocaleString('de-DE', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                })}`;
+                countdownElement.appendChild(dueDateElement);
+
+                const timerElement = document.createElement('p');
+                countdownElement.appendChild(timerElement);
 
                 function updateCountdown() {
                     const now = new Date();
                     const targetDate = new Date(dueDate);
-
                     const timeDiff = targetDate - now;
 
                     if (timeDiff <= 0) {
-                        countdownElement.textContent = "Abgabefrist ist abgelaufen!";
+                        timerElement.textContent = "Abgabefrist ist abgelaufen!";
                         clearInterval(interval);
                         return;
                     }
@@ -514,11 +528,10 @@
                     const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
                     const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
-                    countdownElement.textContent = `${days} Tage, ${hours} Stunden, ${minutes} Minuten, ${seconds} Sekunden`;
+                    timerElement.textContent = `${days} Tage, ${hours} Stunden, ${minutes} Minuten, ${seconds} Sekunden`;
                 }
 
                 const interval = setInterval(updateCountdown, 1000);
-
                 updateCountdown();
             }
         </script>
