@@ -34,6 +34,7 @@
             footer {
                 width: calc(100% - 250px); /* Breite der Sidebar abziehen */
                 left: 250px; /* Footer beginnt nach der Sidebar */
+                transition: all 0.3s ease;
             }
 
             /* Setzt Footer auf komplette Breite wenn Sidebar verschwindet */
@@ -41,6 +42,22 @@
                 footer {
                     width: 100%;
                     left: 0;
+                }
+
+                .hamburger-icon {
+                    display: block !important;
+                }
+
+                .logo-link {
+                    display: none;
+                }
+
+                .main-title {
+                    display: none;
+                }
+
+                .sidebar {
+                    display: none;
                 }
             }
 
@@ -108,19 +125,74 @@
                 font-size: 20px;
                 margin-top: 10px;
             }
+
+            /* Hamburger-Icon */
+            .hamburger-icon {
+                display: none;
+                background: none;
+                border: none;
+                cursor: pointer;
+                margin-right: 15px;
+                padding: 10px;
+            }
+
+            .hamburger-bars {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .bar {
+                width: 25px;
+                height: 3px;
+                background-color: white;
+                transition: all 0.3s ease;
+            }
+
+            /* Mobiles Menü */
+            .mobile-menu {
+                display: none;
+                position: fixed;
+                top: 50px;
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 10px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                z-index: 1000;
+                width: 100%; /* Breite anpassen */
+                right: auto; /* Rechts-Positionierung entfernen */
+            }
+
+            .mobile-menu a {
+                display: block;
+                padding: 10px;
+                color: #333;
+                text-decoration: none;
+            }
+
         </style>
     </head>
     <body>
         <!-- Header -->
         <header>
             <div style="display: flex; align-items: center;">
+                <!-- Hamburger-Icon -->
+                <button id="hamburger" class="hamburger-icon">
+                    <div class="hamburger-bars">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                </button>
+
                 <!-- Logo -->
-                <a href="#" onclick="redirectToMainPage()">
+                <a href="#" onclick="redirectToMainPage()" class="logo-link">
                     <img src="textures/logo-header.png" alt="Logo">
                 </a>
 
                 <!-- Title -->
-                <h1>Main</h1>
+                <h1 class="main-title">Main</h1>
             </div>
 
             <!-- Logout -->
@@ -135,6 +207,12 @@
                 <h2 id="student-list">Studenten TODO</h2>
             </a>
             <div id="fachList"></div>
+        </div>
+
+        <!-- Mobiles Menü -->
+        <div id="mobileMenu" class="mobile-menu">
+            <a href="#" onclick="redirectToMainPage()">Zurück zur Assignment-Übersicht</a>
+            <div id="mobileStudentList"></div>
         </div>
 
 
@@ -331,7 +409,27 @@
 
             // Wenn die Seite geladen ist, die Fächer und Aufgaben laden und die URL-Parameter lesen
             document.addEventListener('DOMContentLoaded', () => {
-                // Fach und Assignment aus Url lesen
+                const hamburgerButton = document.getElementById('hamburger');
+                const mobileMenu = document.getElementById('mobileMenu');
+
+                // Hamburger-Button Klickhandler
+                hamburgerButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    mobileMenu.style.display = mobileMenu.style.display === 'block' ? 'none' : 'block';
+                });
+
+                // Globaler Klickhandler
+                document.addEventListener('click', function(e) {
+                    if (mobileMenu.style.display === 'block' &&
+                        !mobileMenu.contains(e.target) &&
+                        !hamburgerButton.contains(e.target)) {
+                        mobileMenu.style.display = 'none';
+                        hamburgerButton.classList.remove('active');
+                    }
+                });
+
+                // Fach und Assignment aus URL lesen
                 const subjectName = getUrlParameter('subject');
                 const assignmentName = getUrlParameter('assignment');
                 const userName = sessionStorage.getItem("username");
@@ -358,6 +456,7 @@
                     return;
                 }
 
+                // Wenn kein Student ausgewählt ist und der Benutzer ein Tutor ist, den ersten Studenten auswählen
                 if (!studentName && userdata.role === "tutor" && userdata.students.length > 0) {
                     studentName = userdata.students[0];
                     window.location.href = `assignment-tutor.html?subject=${subjectName}&assignment=${assignmentName}&student=${studentName}`;
@@ -375,8 +474,10 @@
                     document.getElementById('pageTitle').textContent = subjectName.replaceAll("_", " ") + ' - ' + assignmentName.replaceAll("_", " ") + ' - ' + studentName;
                 }
 
+                // Titel in der Sidebar setzen
                 document.getElementById('student-list').textContent = subjectName.replaceAll("_", " ") + '\n' + assignmentName.replaceAll("_", " ");
 
+                // Studentenliste erstellen (für Desktop und Mobile)
                 if (userdata.role === "tutor") {
                     const studentList = document.createElement('div');
                     userdata.students.forEach(student => {
@@ -389,8 +490,20 @@
                         studentList.appendChild(studentButton);
                     });
                     document.querySelector('.sidebar').appendChild(studentList);
+
+                    // Kopiere die Studentenliste ins mobile Menü
+                    const mobileStudentList = document.getElementById('mobileStudentList');
+                    mobileStudentList.innerHTML = studentList.innerHTML;
+
+                    // Klick-Events für mobile Studentenbuttons
+                    document.querySelectorAll('#mobileStudentList .student-button').forEach(button => {
+                        button.addEventListener('click', function() {
+                            window.location.href = `assignment-tutor.html?subject=${subjectName}&assignment=${assignmentName}&student=${this.textContent}`;
+                        });
+                    });
                 }
 
+                // Abgaben des Studenten anzeigen
                 const submissionsList = document.querySelector('.field #documents-list ul');
                 submissionsList.innerHTML = '';
                 studentData.submissions.forEach(submission => {
@@ -402,6 +515,7 @@
                     submissionsList.appendChild(listItem);
                 });
 
+                // Dokumente für den Tutor anzeigen
                 const documentsList = document.querySelector('.field-documents #documents-list ul');
                 documentsList.innerHTML = '';
                 const documents = assignments['documents-tutor'];
@@ -414,6 +528,7 @@
                     documentsList.appendChild(listItem);
                 });
 
+                // Feedback und Punkte anzeigen
                 const feedbackText = document.getElementById('feedback-text');
                 if (feedbackText)
                     feedbackText.innerText = studentData.feedback;
@@ -422,21 +537,22 @@
                 if (studentData.points)
                     points.value = studentData.points;
 
-                const submisisonList = document.getElementById('submissions-list');
+                // Korrekturen anzeigen
+                const submissionList = document.getElementById('submissions-list');
                 const correction = studentData.correction;
                 correction.forEach(correction => {
                     const fileElement = document.createElement('div');
                     fileElement.classList.add('submission');
                     fileElement.innerHTML = `
-                        <li class="document-item">
-                            <a href="./documents/${subjectName}/${assignmentName}/${studentName}/${correction}" target="_blank"><span>${correction}</span></a>
-                            <div class="button-group">
-                                <a href="./documents/${subjectName}/${assignmentName}/${studentName}/${correction}" download="${correction}"><button class="download-btn"><i class="fa fa-download" style="font-size:18px"></i></button></a>
-                                <button class="delete-btn" onclick="deleteFile(this)"><i class="fa fa-trash-o" style="font-size:18px"></i></button>
-                            </div>
-                        </li>
-                    `;
-                    submisisonList.appendChild(fileElement);
+            <li class="document-item">
+                <a href="./documents/${subjectName}/${assignmentName}/${studentName}/${correction}" target="_blank"><span>${correction}</span></a>
+                <div class="button-group">
+                    <a href="./documents/${subjectName}/${assignmentName}/${studentName}/${correction}" download="${correction}"><button class="download-btn"><i class="fa fa-download" style="font-size:18px"></i></button></a>
+                    <button class="delete-btn" onclick="deleteFile(this)"><i class="fa fa-trash-o" style="font-size:18px"></i></button>
+                </div>
+            </li>
+        `;
+                    submissionList.appendChild(fileElement);
                 });
             });
 
@@ -570,7 +686,6 @@
                     alert("Ungültige Punktzahl!");
                 }
             }
-
         </script>
     </body>
 </html>
