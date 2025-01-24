@@ -251,7 +251,7 @@
                     const fileElement = document.createElement('li');
                     fileElement.classList.add('document-item');
                     fileElement.innerHTML = `
-                        <a href="./documents/${subjectName}/${assignmentName}/${doc}" target="_blank"><span>${doc}</span></a>
+                        <a href="./documents/${subjectName}/${assignmentName}/document/${doc}" target="_blank"><span>${doc}</span></a>
                         <div class="button-group">
                             <a href="${URL.createObjectURL(new Blob([doc]))}" download="${doc}"><button class="download-btn"><i class="fa fa-download" style="font-size:18px"></i></button></a>
                         </div>
